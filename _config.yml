@@ -1,0 +1,20 @@
+title: Krunal Kshirsagar
+# description: >- # this means to ignore newlines until "baseurl:"
+#  Machine Learning.
+baseurl: "/blog" # the subpath of your site, e.g. /blog
+url: "https://noob-can-compile.github.io" # the base hostname & protocol for your site, e.g. http://example.com
+#baseurl: ""
+#url: ""
+
+permalink: /:categories/:year/:month/:title/
+plugins:
+  - jekyll-scholar
+  - jekyll-sitemap
+  - jekyll-feed
+  - jekyll-seo-tag
+  
+
+# syntax highlighting
+highlighter: rouge
+
+
