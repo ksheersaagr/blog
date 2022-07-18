@@ -2,6 +2,7 @@
 layout: post
 title: "[Thoughts]-On the interpretability conundrum"  
 author: krunal kshirsagar
+largeimage: /images/2022-01-01-trilemma-or-trilogy.png
 published: true
 ---
 
