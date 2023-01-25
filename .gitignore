@@ -2,3 +2,5 @@ _site
 _drafts
 
 .jekyll-cache
+.bundle/
+vendor/
