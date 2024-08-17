@@ -1,6 +1,6 @@
 # Blog
 
-Website - https://noob-can-compile.github.io/blog/
+Website - ksheersaagr.github.io/blog/
 
 Blog theme modified from [Teddy Koker](https://teddykoker.com).
 
