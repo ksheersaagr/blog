@@ -95,6 +95,5 @@ Nowadays, federated learning is being sold upon the notion of security and priva
 13. [Federated learning for wireless communications: motivation, opportunities and challenges](https://arxiv.org/pdf/1908.06847.pdf)
 14. [Autonomous driving with deep learning: a survey of state-of-art technologies](https://arxiv.org/ftp/arxiv/papers/2006/2006.06091.pdf)
 
-If you find this article interesting be sure to follow me on [**twitter**](https://twitter.com/iamkshirsagar) for more of such blogpost and updates.
 
 Thanks for reading.

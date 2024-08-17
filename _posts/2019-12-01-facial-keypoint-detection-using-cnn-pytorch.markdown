@@ -309,5 +309,5 @@ for (x,y,w,h) in faces:
 #### Output:  
 <img src="{{ site.baseurl }}/images/2019-12-01-facial-keypoint-detection-using-cnn-pytorch-facial-keypoints-detected.png">
 
-**Feel free to check out my project on [Github](https://github.com/Noob-can-Compile/Facial_Keypoint_Detection).**
+**Feel free to check out my project on [Github](https://github.com/ksheersaagr/Facial_Keypoint_Detection).**
 

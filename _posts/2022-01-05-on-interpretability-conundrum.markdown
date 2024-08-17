@@ -23,6 +23,8 @@ These  ML  models  are  making accurate decisions  about  racial  classification
 <br>
 <img src="{{ site.baseurl }}/images/2022-01-01-trilemma-or-trilogy.png"
 style="float: right; max-width: 50%; margin: 0 0 1em 2em;"> 
+
+
 In order to trust the system 
 we need to break things down like in the first principles approach and then make a ground-up 
 approach  to  interpretability/reasoning.  Hence,  I  believe,  mathematical  methods  like  causal 

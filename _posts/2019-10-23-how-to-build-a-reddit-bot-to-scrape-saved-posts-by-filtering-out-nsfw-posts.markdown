@@ -17,5 +17,5 @@ However, Do run the script initially by inserting your credentials wherever aske
 3. You need some knowledge of CSS query selector in order to access the elements via class name on Reddit by inspecting element on the browser(firefox).   
 4. The code isn’t universal so you need to tweak the code according to your Reddit Classnames by inspecting elements and using CSS query selectors on the browser.  
 
-Checkout the code on **[Github](https://github.com/Noob-can-Compile/reddit_saved_post_filter)**
+Checkout the code on **[Github](https://github.com/ksheersaagr/reddit_saved_post_filter)**
 

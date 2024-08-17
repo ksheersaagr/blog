@@ -62,6 +62,6 @@ for img in get_photos('name of the public page without spaces', pages=1000):
 
 Done.
 
-**Please find the script on [Github](https://github.com/Noob-can-Compile/Suckerbug).**
+**Please find the script on [Github](https://github.com/ksheersaagr/Suckerbug).**
 
 Thanks for reading.

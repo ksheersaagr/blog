@@ -345,7 +345,7 @@ Call the **`(get_prediction)`** function every time you want the result.
 
 **Clearly, as you can see the model struggles if the image is cluttered with more objects. Hence, the model finds it difficult to generate a long sequence of words that relate to each other using the spatial data in the image.**
 
-Make sure to check out my project on **[Github](https://github.com/Noob-can-Compile/Automatic-Image-Captioning/).**
+Make sure to check out my project on **[Github](https://github.com/ksheersaagr/Automatic-Image-Captioning/).**
 
 ## References:
 
