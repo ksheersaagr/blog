@@ -14,7 +14,7 @@ Let’s assume we have a robot and the initial location, **x0=0 & y0=0.** For th
 <img src="{{ site.baseurl }}/images/2020-03-31-graph-slam-a-noobs-guide-to-simultaneous-localisation-and-mapping-displacement-by-10.png
 ">
 
-But according to **[Kalman filters](https://ksheersaagr.github.io/home/2020/02/28/the-curious-case-of-kalman-filters.html)** and various other robotic techniques, we have learned that the **location is actually uncertain**. So, rather than assuming in our X-Y coordinate system the robot moved to the right by 10 exactly, it’s better to understand that the actual location of the robot after the x1= x0+10 motion update is a Gaussian centered around (10,0), but it’s possible that the robot is somewhere else.
+But according to **[Kalman filters](https://ksheersaagr.github.io/blog/2020/02/the-curious-case-of-kalman-filters/)** and various other robotic techniques, we have learned that the **location is actually uncertain**. So, rather than assuming in our X-Y coordinate system the robot moved to the right by 10 exactly, it’s better to understand that the actual location of the robot after the x1= x0+10 motion update is a Gaussian centered around (10,0), but it’s possible that the robot is somewhere else.
 
 <img src="{{ site.baseurl }}/images/2020-03-31-graph-slam-a-noobs-guide-to-simultaneous-localisation-and-mapping-gaussian-centered-around-the-location-of-robot-after-motion-update.png
 ">
