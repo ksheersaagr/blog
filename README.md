@@ -1,6 +1,6 @@
 # Blog
 
-Website - ksheersaagr.github.io/blog/
+Website - https://ksheersaagr.github.io/blog/
 
 Blog theme modified from [Teddy Koker](https://teddykoker.com).
 
