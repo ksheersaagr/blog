@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Suckerbug: A python script to scrape photos from facebook’s public pages | Krunal Kshirsagar</title>
+<meta name="generator" content="Jekyll v4.0.1" />
+<meta property="og:title" content="Suckerbug: A python script to scrape photos from facebook’s public pages" />
+<meta name="author" content="krunal kshirsagar" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="P.S. The recent facebook outage grabbed my attention hence I wrote the script for fun ;p" />
+<meta property="og:description" content="P.S. The recent facebook outage grabbed my attention hence I wrote the script for fun ;p" />
+<link rel="canonical" href="https://ksheersaagr.github.io/blog/2021/10/suckerbug-python-script-to-scrape-photos-from-facebook-public-pages/" />
+<meta property="og:url" content="https://ksheersaagr.github.io/blog/2021/10/suckerbug-python-script-to-scrape-photos-from-facebook-public-pages/" />
+<meta property="og:site_name" content="Krunal Kshirsagar" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-10-09T00:00:00+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Suckerbug: A python script to scrape photos from facebook’s public pages" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"krunal kshirsagar"},"dateModified":"2021-10-09T00:00:00+00:00","datePublished":"2021-10-09T00:00:00+00:00","description":"P.S. The recent facebook outage grabbed my attention hence I wrote the script for fun ;p","headline":"Suckerbug: A python script to scrape photos from facebook’s public pages","mainEntityOfPage":{"@type":"WebPage","@id":"https://ksheersaagr.github.io/blog/2021/10/suckerbug-python-script-to-scrape-photos-from-facebook-public-pages/"},"url":"https://ksheersaagr.github.io/blog/2021/10/suckerbug-python-script-to-scrape-photos-from-facebook-public-pages/"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/blog/assets/main.css">
+  <link rel="stylesheet" href="/blog/assets/trac.css"><link type="application/atom+xml" rel="alternate" href="https://ksheersaagr.github.io/blog/feed.xml" title="Krunal Kshirsagar" /><!---
+  <link rel="shortcut icon" href="/favicon.png">
+  -->
+  <link rel="shortcut icon" type="image/png" href="/blog/favicon.png">
+
+  <!-- Katex Math (use defer to speed page load) -->
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"
+        integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq"
+        crossorigin="anonymous">
+  <script defer
+          src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"
+          integrity="sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz"
+          crossorigin="anonymous"></script>
+  <script defer
+          src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"
+          integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI"
+          crossorigin="anonymous"
+          onload='renderMathInElement(document.body,{delimiters: [{left: "\\[",
+          right: "\\]", display: true}, {left: "$", right: "$", display: false}]})'></script>
+</head>
+</head>
+<body>
+<div class='content'><div class='nav'>
+    <ul class='wrap'>
+        <!---<li><b><a href='/blog/' style="font-size:20px; color:black; padding-right: 350px"; class="split">Krunal Kshirsagar</a></b></li>-->
+        <li><a href='/blog'><img src="/blog/images/home-logo-1.svg" alt="Home" style="width:20px;height:20px;"></a></li>
+        <li><a href='/blog/about'><img src="/blog/images/about-logo.svg" alt="About" style="width:20px;height:20px;"></a></li>
+        <li><a href="https://github.com/ksheersaagr"><img src="/blog/images/github-logo.svg" alt="Github" style="width:20px;height:20px;"></a></li>
+        <li><a href="https://www.linkedin.com/in/krunal-kshirsagar/"><img src="/blog/images/linkedin-logo.svg" alt="Linkedin" style="width:20px;height:20px;"></a></li>
+        <li><a href="mailto:krunalkshirsagar29@gmail.com"><img src="/blog/images/mail-logo.svg" alt="Mail" style="width:20px;height:20px;"></a></li>
+    </ul>
+</div>
+<div class='front-matter'>
+    <div class='wrap'>
+        <h1>Suckerbug: A python script to scrape photos from facebook's public pages</h1>
+        <h4></h4>
+        <div class='bylines'>
+            <div class='byline'>
+                <h3>Published by Krunal Kshirsagar</h3>
+                <p>09 October 2021</p>
+            </div>
+        </div>
+        <div class='clear'></div>
+    </div>
+</div>
+<div class='wrap article'>
+    <p>P.S. The recent facebook outage grabbed my attention hence I wrote the script for fun ;p</p>
+
+<h2 id="install-the-required-libraries-by-entering-the-commands-in-the-command-terminal-given-below">Install the required libraries by entering the commands in the command terminal given below:</h2>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip install facebook-scraper
+pip install Pillow
+pip install requests
+</code></pre></div></div>
+<ul>
+  <li>
+    <p><a href="https://github.com/kevinzg/facebook-scraper">facebook-scraper</a> is a great library with which you can do much more than just scrapping photos from facebook.</p>
+  </li>
+  <li>
+    <p><a href="https://github.com/python-pillow/Pillow">Pillow</a> is a python imaging library.</p>
+  </li>
+  <li>
+    <p><a href="https://github.com/psf/requests">Requests</a> is an HTTP request library used to process URLs.</p>
+  </li>
+</ul>
+
+<h2 id="importing-packages">Importing packages</h2>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from facebook_scraper import *
+import os
+import io
+import requests
+from PIL import Image
+import tempfile
+</code></pre></div></div>
+<ul>
+  <li>Now I wanted to make a function that will process the HTTP request, iterate through the page contents and return images that will be stored in the temporary folder(in my case I’ve saved it in the current directory).</li>
+</ul>
+
+<h2 id="download-image-function">Download image function</h2>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">def</span> <span class="nf">download_image</span><span class="p">(</span><span class="n">img_url</span><span class="p">,</span> <span class="n">out_dir</span><span class="p">,</span> <span class="n">img_name</span><span class="p">):</span>
+    <span class="n">buffer</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="no">SpooledTemporaryFile</span><span class="p">(</span><span class="n">max_size</span><span class="o">=</span><span class="mf">1e9</span><span class="p">)</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="n">img_url</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="no">True</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">r</span><span class="p">.</span><span class="nf">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+        <span class="n">downloaded</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">filesize</span> <span class="o">=</span> <span class="n">int</span><span class="p">(</span><span class="n">r</span><span class="p">.</span><span class="nf">headers</span><span class="p">[</span><span class="s1">'content-length'</span><span class="p">])</span>
+        <span class="k">for</span> <span class="n">chunk</span> <span class="k">in</span> <span class="n">r</span><span class="p">.</span><span class="nf">iter_content</span><span class="p">(</span><span class="n">chunk_size</span><span class="o">=</span><span class="mi">1024</span><span class="p">):</span>
+            <span class="n">downloaded</span> <span class="o">+=</span> <span class="n">len</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
+            <span class="n">buffer</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">downloaded</span><span class="o">/</span><span class="n">filesize</span><span class="p">)</span>
+        <span class="n">buffer</span><span class="p">.</span><span class="nf">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="no">Image</span><span class="p">.</span><span class="nf">open</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="no">BytesIO</span><span class="p">(</span><span class="n">buffer</span><span class="p">.</span><span class="nf">read</span><span class="p">()))</span>
+        <span class="n">i</span><span class="p">.</span><span class="nf">save</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="nf">path</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="n">out_dir</span><span class="p">,</span> <span class="n">img_name</span><span class="p">),</span> <span class="n">quality</span><span class="o">=</span><span class="mi">85</span><span class="p">)</span>
+    <span class="n">buffer</span><span class="p">.</span><span class="nf">close</span><span class="p">()</span></code></pre></figure>
+
+<h2 id="calling-the-inbuilt-get_photos-function-from-facebook-scraper-library">Calling the inbuilt get_photos() function from facebook-scraper library</h2>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="k">for</span> <span class="n">img</span> <span class="k">in</span> <span class="n">get_photos</span><span class="p">(</span><span class="s1">'name of the public page without spaces'</span><span class="p">,</span> <span class="n">pages</span><span class="o">=</span><span class="mi">1000</span><span class="p">):</span>
+    <span class="n">img_name</span> <span class="o">=</span> <span class="s2">""</span><span class="p">.</span><span class="nf">join</span><span class="p">([</span><span class="s1">'image'</span><span class="p">,</span> <span class="n">str</span><span class="p">(</span><span class="n">count</span><span class="p">),</span> <span class="s1">'.jpg'</span><span class="p">])</span>
+    <span class="n">download_image</span><span class="p">(</span><span class="n">img</span><span class="p">[</span><span class="s1">'images'</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="s2">""</span><span class="p">,</span> <span class="n">img_name</span><span class="p">)</span>
+    <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span></code></pre></figure>
+
+<p>Done.</p>
+
+<p><strong>Please find the script on <a href="https://github.com/ksheersaagr/Suckerbug">Github</a>.</strong></p>
+
+<p>Thanks for reading.</p>
+
+</div>
+<div id='bibliography'>
+    <div class='wrap'>
+        <ol class="bibliography"></ol>
+    </div>
+</div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>The Curious Case of Kalman Filters | Krunal Kshirsagar</title>
+<meta name="generator" content="Jekyll v4.0.1" />
+<meta property="og:title" content="The Curious Case of Kalman Filters" />
+<meta name="author" content="krunal kshirsagar" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Kalman filter finds the most optimum averaging factor for each consequent state. Also somehow remembers a little bit about the past states. It performs a joint probability distribution over the variables for each timeframe. The algorithm uses the new mean and new variance for every step in order to calculate the uncertainty and tries to provide accurate measurements for each timeframe of the measurement update (sensing/prediction) and the motion update(moving). The algorithm also uses other inaccuracies and statistical noise in order to represent the initial uncertainty." />
+<meta property="og:description" content="Kalman filter finds the most optimum averaging factor for each consequent state. Also somehow remembers a little bit about the past states. It performs a joint probability distribution over the variables for each timeframe. The algorithm uses the new mean and new variance for every step in order to calculate the uncertainty and tries to provide accurate measurements for each timeframe of the measurement update (sensing/prediction) and the motion update(moving). The algorithm also uses other inaccuracies and statistical noise in order to represent the initial uncertainty." />
+<link rel="canonical" href="https://ksheersaagr.github.io/blog/2020/02/the-curious-case-of-kalman-filters/" />
+<meta property="og:url" content="https://ksheersaagr.github.io/blog/2020/02/the-curious-case-of-kalman-filters/" />
+<meta property="og:site_name" content="Krunal Kshirsagar" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-02-28T00:00:00+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="The Curious Case of Kalman Filters" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"krunal kshirsagar"},"dateModified":"2020-02-28T00:00:00+00:00","datePublished":"2020-02-28T00:00:00+00:00","description":"Kalman filter finds the most optimum averaging factor for each consequent state. Also somehow remembers a little bit about the past states. It performs a joint probability distribution over the variables for each timeframe. The algorithm uses the new mean and new variance for every step in order to calculate the uncertainty and tries to provide accurate measurements for each timeframe of the measurement update (sensing/prediction) and the motion update(moving). The algorithm also uses other inaccuracies and statistical noise in order to represent the initial uncertainty.","headline":"The Curious Case of Kalman Filters","mainEntityOfPage":{"@type":"WebPage","@id":"https://ksheersaagr.github.io/blog/2020/02/the-curious-case-of-kalman-filters/"},"url":"https://ksheersaagr.github.io/blog/2020/02/the-curious-case-of-kalman-filters/"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/blog/assets/main.css">
+  <link rel="stylesheet" href="/blog/assets/trac.css"><link type="application/atom+xml" rel="alternate" href="https://ksheersaagr.github.io/blog/feed.xml" title="Krunal Kshirsagar" /><!---
+  <link rel="shortcut icon" href="/favicon.png">
+  -->
+  <link rel="shortcut icon" type="image/png" href="/blog/favicon.png">
+
+  <!-- Katex Math (use defer to speed page load) -->
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"
+        integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq"
+        crossorigin="anonymous">
+  <script defer
+          src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"
+          integrity="sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz"
+          crossorigin="anonymous"></script>
+  <script defer
+          src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"
+          integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI"
+          crossorigin="anonymous"
+          onload='renderMathInElement(document.body,{delimiters: [{left: "\\[",
+          right: "\\]", display: true}, {left: "$", right: "$", display: false}]})'></script>
+</head>
+</head>
+<body>
+<div class='content'><div class='nav'>
+    <ul class='wrap'>
+        <!---<li><b><a href='/blog/' style="font-size:20px; color:black; padding-right: 350px"; class="split">Krunal Kshirsagar</a></b></li>-->
+        <li><a href='/blog'><img src="/blog/images/home-logo-1.svg" alt="Home" style="width:20px;height:20px;"></a></li>
+        <li><a href='/blog/about'><img src="/blog/images/about-logo.svg" alt="About" style="width:20px;height:20px;"></a></li>
+        <li><a href="https://github.com/ksheersaagr"><img src="/blog/images/github-logo.svg" alt="Github" style="width:20px;height:20px;"></a></li>
+        <li><a href="https://www.linkedin.com/in/krunal-kshirsagar/"><img src="/blog/images/linkedin-logo.svg" alt="Linkedin" style="width:20px;height:20px;"></a></li>
+        <li><a href="mailto:krunalkshirsagar29@gmail.com"><img src="/blog/images/mail-logo.svg" alt="Mail" style="width:20px;height:20px;"></a></li>
+    </ul>
+</div>
+<div class='front-matter'>
+    <div class='wrap'>
+        <h1>The Curious Case of Kalman Filters</h1>
+        <h4></h4>
+        <div class='bylines'>
+            <div class='byline'>
+                <h3>Published by Krunal Kshirsagar</h3>
+                <p>28 February 2020</p>
+            </div>
+        </div>
+        <div class='clear'></div>
+    </div>
+</div>
+<div class='wrap article'>
+    <p>Kalman filter finds the most optimum averaging factor for each consequent state. Also somehow remembers a little bit about the past states. It performs a joint probability distribution over the variables for each timeframe. The algorithm uses the new mean and new variance for every step in order to calculate the uncertainty and tries to provide accurate measurements for each timeframe of the measurement update (sensing/prediction) and the motion update(moving). The algorithm also uses other inaccuracies and statistical noise in order to represent the initial uncertainty.</p>
+
+<h1 id="purpose-of-kalman-filters">Purpose of Kalman Filters:</h1>
+
+<ul>
+  <li><strong>Transform data input from various sensors like LiDAR and Radar trackers into a usable form.</strong></li>
+  <li><strong>To Calculate inferring velocity.</strong></li>
+  <li><strong>Reduce measurement error(noise) of the target’s position and velocity.</strong></li>
+  <li><strong>Predict the future state of the target using previous state estimate and new data.</strong></li>
+  <li><strong>Lightweight, Robust and expandable algorithm.</strong></li>
+  <li><strong>Estimates a continuous state and as a result, Kalman Filters happens to give us an Uni-modal distribution.</strong></li>
+</ul>
+
+<h1 id="working-of-kalman-filters">Working of Kalman Filters:</h1>
+
+<p>A Kalman filter gives us a mathematical way to infer velocity from only a set of measured locations. So, here I’m going to create a 1D Kalman filter that takes in positions, takes into account uncertainty, and estimates where future locations might be and the velocity of an object. Further, if we want to understand how Kalman filter works, we first need to know a bit about Gaussians which represents the Uni-modal distribution in the Kalman filters.</p>
+
+<h1 id="gaussian">Gaussian:</h1>
+
+<p><img src="/blog/images/2020-02-28-the-curious-case-of-kalman-filters-graph-representing-gaussian.png " /></p>
+
+<p><strong><em>Gaussian is a continuous function over the space of location and the area underneath sums up to 1.</em></strong><br />
+The Gaussian is characterized by two parameters, the mean, often abbreviated with the Greek letter Mu<strong><em>( μ )</em></strong>, and the width of the Gaussian often called the variance i.e. Sigma square<strong><em>( σ² )</em></strong>. So, our job in common phases is to maintain a Mu(μ) and a Sigma square<strong><em>( σ² )</em></strong> as our best estimate of the location of the object we are trying to find. Also, remember that the larger the width, the more uncertainty it possesses.</p>
+
+<p><img src="/blog/images/2020-02-28-the-curious-case-of-kalman-filters-the-equation-for-1d-gaussian.png " /></p>
+
+<p>The diagram in the above image represents the mean<strong><em>( μ )</em></strong> and variance<strong><em>( σ² )</em></strong> of the gaussian. The taller the mean<strong><em>( μ )</em></strong>, the chances of the object present at that position are higher. conversely, if the variance<strong><em>( σ² )</em></strong> is larger, i.e. wider the distribution, higher the uncertainty of that object; that might be positioned at any place within the gaussian. And as far as the formula is concerned, it is an exponential of a quadratic function where we take the exponent of the expression. The quadratic difference of our query point x, relative to the mean<strong><em>( μ )</em></strong>, divided by sigma square<strong><em>( σ² )</em></strong>, multiplied by -(1/2). Now if <strong><em>x</em></strong> = <strong><em>μ</em></strong>, then the numerator becomes 0, and if x of 0, which is 1. It turns out we have to normalize this by a constant, 1 over the square root of 2 Pi<strong><em>(π)</em></strong> sigma square<strong><em>( σ² )</em></strong>.</p>
+
+<h1 id="gaussian-characteristics">Gaussian Characteristics:</h1>
+
+<p>Gaussians are exponential function characterized by a given mean<strong><em>( μ )</em></strong>, which defines the location of the peak of a Gaussian curve, and a variance<strong><em>( σ² )</em></strong> which defines the width/spread of the curve. All Gaussian are:</p>
+<ul>
+  <li><strong>symmetrical</strong></li>
+  <li>they have <strong>one peak</strong>, which is also referred to as a “unimodal” distribution, and they have an exponential drop off on either side of that peak.</li>
+</ul>
+
+<h1 id="more-on-variance">More on Variance:</h1>
+
+<p>The variance is a measure of Gaussian spread; larger variances correspond to shorter Gaussians. Variance is also a measure of certainty; if you are trying to find something like the location of a car with the most certainty, you’ll want a Gaussian whose mean is the location of the car and with the smallest uncertainty/spread.</p>
+
+<h1 id="lets-write-a-gaussian-function">Let’s write a Gaussian function:</h1>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+
+<span class="c1"># gaussian function
+</span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">mu</span><span class="p">,</span> <span class="n">sigma2</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+    <span class="s">''' f takes in a mean and squared variance, and an input x
+       and returns the gaussian value.'''</span>
+    <span class="n">coefficient</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">sqrt</span><span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">pi</span> <span class="o">*</span><span class="n">sigma2</span><span class="p">)</span>
+    <span class="n">exponential</span> <span class="o">=</span> <span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="n">mu</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">/</span> <span class="n">sigma2</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">coefficient</span> <span class="o">*</span> <span class="n">exponential</span>
+</code></pre></div></div>
+<h1 id="shifting-the-mean">Shifting the Mean:</h1>
+
+<p>In Kalman filters, we iterate through measurement (measurement update) which uses Bayes rule, which is nothing else but a product or multiplication and through motion update(prediction) in which we use total probability which is a convolution or simply an addition.</p>
+
+<p><img src="/blog/images/2020-02-28-the-curious-case-of-kalman-filters-mysterious-cycle.png " /></p>
+
+<p>In order to understand the cycle, let’s assume that we are localizing a vehicle and we have a prior distribution(blue gaussian); it is a very wide Gaussian with the mean. and now let’s say we get a measurement(orange gaussian) that tells us something about the localization of vehicle. This is an example in our prior we were fairly uncertain about the location but the measurement told us quite a bit as to where the vehicle is.</p>
+
+<p><img src="/blog/images/2020-02-28-the-curious-case-of-kalman-filters-prior-distribution-measurement-distribution.png " /></p>
+
+<blockquote>
+  <p>Note: In the above diagram, Mu<strong><em>( μ )</em></strong> is the prior mean and Nu<strong><em>( v )</em></strong> is the new measurement mean.</p>
+</blockquote>
+
+<p>The final mean gets shifted which is in between the two old means, the mean of the prior, and the mean of the measurement. It’s slightly further on the measurement side because the measurement was more certain as to where the vehicle is than prior. The more certain we are, the more we pull the mean on the direction of the certain answer.</p>
+
+<p><img src="/blog/images/2020-02-28-the-curious-case-of-kalman-filters-new-mean.png " /></p>
+
+<h1 id="where-is-the-new-peak">Where is the new peak?</h1>
+
+<p><img src="/blog/images/2020-02-28-the-curious-case-of-kalman-filters-new-peak.png " /></p>
+
+<p>The resulting Gaussian is more certain than the two-component Gaussians i.e. the covariance is smaller than either of the two covariances in the installation. Intuitively speaking, this is the case because we actually gain information. The two Gaussians together with high information content in either Gaussian installation.</p>
+
+<h1 id="parameter-update">Parameter Update:</h1>
+
+<p><img src="/blog/images/2020-02-28-the-curious-case-of-kalman-filters-measurement-update.png " /></p>
+
+<ol>
+  <li>Suppose we multiply two Gaussians, as in Bayes rule, a prior and a measurement probability. The prior has a mean of Mu<strong><em>( μ )</em></strong> and a variance of Sigma square<strong><em>( σ² )</em></strong>, and the measurement has a mean of Nu<strong><em>( v )</em></strong> and covariance of r-square<strong><em>( r² )</em></strong>.</li>
+  <li>Then, the new mean, Mu prime<strong><em>( μ′ )</em></strong>, is the weighted sum of the old means. The Mu<strong><em>( μ )</em></strong> is weighted by r-square<strong><em>( r² )</em></strong>, Nu<strong><em>( v )</em></strong> is weighted by Sigma square<strong><em>( σ² )</em></strong>, normalized by the sum of the weighting factors. The new variance term would be Sigma square prime<strong><em>( σ²′ )</em></strong>.</li>
+  <li>Clearly, the prior Gaussian has a much higher uncertainty, therefore, Sigma square<strong><em>( σ² )</em></strong> is larger and that means the Nu<strong><em>( v )</em></strong> is weighted much much larger than the Mu<strong><em>( μ )</em></strong>. So, the mean will be closer to the Nu<strong><em>( v )</em></strong>than the Mu<strong><em>( μ )</em></strong>. Interestingly enough, the variance term is unaffected by the actual means, it just uses the previous variances.</li>
+</ol>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="n">mean1</span><span class="p">,</span> <span class="n">var1</span><span class="p">,</span> <span class="n">mean2</span><span class="p">,</span> <span class="n">var2</span><span class="p">):</span>
+    <span class="s">''' This function takes in two means and two squared variance terms,
+        and returns updated gaussian parameters.'''</span>
+    <span class="c1"># Calculate the new parameters
+</span>    <span class="n">new_mean</span> <span class="o">=</span> <span class="p">(</span><span class="n">var2</span><span class="o">*</span><span class="n">mean1</span> <span class="o">+</span> <span class="n">var1</span><span class="o">*</span><span class="n">mean2</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">var2</span><span class="o">+</span><span class="n">var1</span><span class="p">)</span>
+    <span class="n">new_var</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">var2</span> <span class="o">+</span> <span class="mi">1</span><span class="o">/</span><span class="n">var1</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="p">[</span><span class="n">new_mean</span><span class="p">,</span> <span class="n">new_var</span><span class="p">]</span>
+</code></pre></div></div>
+
+<h1 id="gaussian-motion">Gaussian Motion:</h1>
+
+<p><img src="/blog/images/2020-02-28-the-curious-case-of-kalman-filters-motion-update.png " /></p>
+
+<p>A new Mean<strong><em>( μ′ )</em></strong> is your old Mean Mu<strong><em>( μ )</em></strong> plus the motion often called <strong>u</strong>. So, if you move over 10 meters in the x-direction, this will be 10 meters and you knew Sigma square prime<strong><em>( σ²′ )</em></strong> is your old Sigma squared<strong><em>( σ² )</em></strong> plus the variance<strong><em>( r² )</em></strong> of the motion Gaussian. This is all you need to know, it’s just an addition. The resulting Gaussian in the prediction step just adds these two things up, mu<strong><em>( μ )</em></strong> plus <strong>u</strong> and sigma squared<strong><em>( σ² )</em></strong> plus <strong><em>( r² )</em></strong>.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="n">mean1</span><span class="p">,</span> <span class="n">var1</span><span class="p">,</span> <span class="n">mean2</span><span class="p">,</span> <span class="n">var2</span><span class="p">):</span>
+    <span class="s">''' This function takes in two means and two squared variance terms,
+        and returns updated gaussian parameters, after motion.'''</span>
+    <span class="c1"># Calculate the new parameters
+</span>    <span class="n">new_mean</span> <span class="o">=</span> <span class="n">mean1</span> <span class="o">+</span> <span class="n">mean2</span>
+    <span class="n">new_var</span> <span class="o">=</span> <span class="n">var1</span> <span class="o">+</span> <span class="n">var2</span>
+    
+    <span class="k">return</span> <span class="p">[</span><span class="n">new_mean</span><span class="p">,</span> <span class="n">new_var</span><span class="p">]</span>
+</code></pre></div></div>
+
+<h1 id="the-filter-pipeline">The Filter Pipeline:</h1>
+
+<ul>
+  <li>So now let’s put everything together. Let’s write the main program that takes these 2 functions, update and predict, and feeds into a sequence of measurements and motions. In the example I’ve chosen, measurements = 5., 6., 7., 9., 10. and motions are 1., 1., 2., 1., 1. This all would work out really well if the initial estimate was 5, but we’re setting it to 0 with a very large uncertainty of 10,000.</li>
+  <li>Let’s assume the measurement uncertainty is constant 4, and the motion uncertainty is constant 2. When you run this, your first estimate for the position should basically become 5–4.99, and the reason is your initial uncertainty is so large, the estimate is dominated by the first measurement. Your uncertainty shrinks to 3.99, which is slightly better than the measurement uncertainty. You then predict that you add 1, but the uncertainty increases to 5.99, which is the motion uncertainty of 2.</li>
+  <li>You update again based on measurement 6, you get your estimate of 5.99, which is almost 6. You move 1 again. You measure 7. You move 2. You measure 9. You move 1. You measure 10, and you move a final 1. And outcomes as the final result, a prediction of 10.99 for the position, which is your 10 position moved by 1, and the uncertainty(residual uncertainty) of 4.</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># measurements for mu and motions, U
+</span><span class="n">measurements</span> <span class="o">=</span> <span class="p">[</span><span class="mf">5.</span><span class="p">,</span> <span class="mf">6.</span><span class="p">,</span> <span class="mf">7.</span><span class="p">,</span> <span class="mf">9.</span><span class="p">,</span> <span class="mf">10.</span><span class="p">]</span>
+<span class="n">motions</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">]</span>
+
+<span class="c1"># initial parameters
+</span><span class="n">measurement_sig</span> <span class="o">=</span> <span class="mf">4.</span>
+<span class="n">motion_sig</span> <span class="o">=</span> <span class="mf">2.</span>
+<span class="n">mu</span> <span class="o">=</span> <span class="mf">0.</span>
+<span class="n">sig</span> <span class="o">=</span> <span class="mf">10000.</span>  <span class="c1">#0000000001  
+</span>
+<span class="c1">## TODO: Loop through all measurements/motions
+## Print out and display the resulting Gaussian 
+</span>
+<span class="c1"># your code here
+</span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">measurements</span><span class="p">)):</span>
+    <span class="c1"># measurement update, with uncertainty
+</span>    <span class="n">mu</span><span class="p">,</span> <span class="n">sig</span> <span class="o">=</span> <span class="n">update</span><span class="p">(</span><span class="n">mu</span><span class="p">,</span> <span class="n">sig</span><span class="p">,</span> <span class="n">measurements</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">measurement_sig</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">'Update: [{}, {}]'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">mu</span><span class="p">,</span> <span class="n">sig</span><span class="p">))</span>
+    <span class="c1"># motion update, with uncertainty
+</span>    <span class="n">mu</span><span class="p">,</span> <span class="n">sig</span> <span class="o">=</span> <span class="n">predict</span><span class="p">(</span><span class="n">mu</span><span class="p">,</span> <span class="n">sig</span><span class="p">,</span> <span class="n">motions</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">motion_sig</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">'Predict: [{}, {}]'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">mu</span><span class="p">,</span> <span class="n">sig</span><span class="p">))</span>
+
+    
+<span class="c1"># print the final, resultant mu, sig
+</span><span class="k">print</span><span class="p">(</span><span class="s">'</span><span class="se">\n</span><span class="s">'</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'Final result: [{}, {}]'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">mu</span><span class="p">,</span> <span class="n">sig</span><span class="p">))</span>
+</code></pre></div></div>
+<h1 id="output">Output</h1>
+<h4 id="when-the-initial-uncertainty-is-high">When the initial uncertainty is high:</h4>
+
+<p><img src="/blog/images/2020-02-28-the-curious-case-of-kalman-filters-when-the-initial-uncertainty-is-high.png " /></p>
+
+<h1 id="plotting-the-gaussian">Plotting the Gaussian:</h1>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">## Print out and display the final, resulting Gaussian 
+# set the parameters equal to the output of the Kalman filter result
+</span><span class="n">mu</span> <span class="o">=</span> <span class="n">mu</span>
+<span class="n">sigma2</span> <span class="o">=</span> <span class="n">sig</span>
+
+<span class="c1"># define a range of x values
+</span><span class="n">x_axis</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span>
+
+<span class="c1"># create a corresponding list of gaussian values
+</span><span class="n">g</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">x_axis</span><span class="p">:</span>
+    <span class="n">g</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">mu</span><span class="p">,</span> <span class="n">sigma2</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span>
+
+<span class="c1"># plot the result 
+</span><span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_axis</span><span class="p">,</span> <span class="n">g</span><span class="p">)</span>
+</code></pre></div></div>
+<p><img src="/blog/images/2020-02-28-the-curious-case-of-kalman-filters-resulting-gaussian.png " /></p>
+
+<h1 id="how-the-filter-actually-works">How the Filter actually works:</h1>
+<blockquote>
+  <p>Remember that measurement_sig(var2 or σ²) = 4 in measurement update &amp; motion_sig(var2 or σ²) = 2 in motion update(prediction) will remain constant. Other than that each and every variable in the code will be updated at each timestep. for example, in the for loop of the filter pipeline, the mu and sig values will get updated in the measurement update and the new updated mu and sig values are then fed into the motion update(predict) function. then again when the new values are generated by the motion update(predict) function, those updated values are then fed into the measurement update(update) function and the cycle goes on till it calculates uncertainty for each and every timestep of the vehicle/object.
+Feel free to mess around with the code and understand what is really happening when you change a particular variable’s value. <strong>Also, change the initial uncertainty to a very low value such as 0.0000000001 in order to get a clear understanding of How the Kalman Filter works!</strong></p>
+</blockquote>
+
+<p>Check out the code on <strong><a href="https://github.com/ksheersaagr/Kalman_Filters">Github</a></strong>.</p>
+
+
+</div>
+<div id='bibliography'>
+    <div class='wrap'>
+        <ol class="bibliography"></ol>
+    </div>
+</div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Facial Keypoint Detection using CNN &amp; PyTorch | Krunal Kshirsagar</title>
+<meta name="generator" content="Jekyll v4.0.1" />
+<meta property="og:title" content="Facial Keypoint Detection using CNN &amp; PyTorch" />
+<meta name="author" content="krunal kshirsagar" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Facial Keypoints are also called Facial Landmarks which generally specify the areas of the nose, eyes, mouth, etc on the face, classified by 68 key points, with coordinates (x, y), for that face. With Facial Keypoints, we can achieve facial recognition, emotion recognition, etc." />
+<meta property="og:description" content="Facial Keypoints are also called Facial Landmarks which generally specify the areas of the nose, eyes, mouth, etc on the face, classified by 68 key points, with coordinates (x, y), for that face. With Facial Keypoints, we can achieve facial recognition, emotion recognition, etc." />
+<link rel="canonical" href="https://ksheersaagr.github.io/blog/2019/12/facial-keypoint-detection-using-cnn-pytorch/" />
+<meta property="og:url" content="https://ksheersaagr.github.io/blog/2019/12/facial-keypoint-detection-using-cnn-pytorch/" />
+<meta property="og:site_name" content="Krunal Kshirsagar" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-12-01T00:00:00+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Facial Keypoint Detection using CNN &amp; PyTorch" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"krunal kshirsagar"},"dateModified":"2019-12-01T00:00:00+00:00","datePublished":"2019-12-01T00:00:00+00:00","description":"Facial Keypoints are also called Facial Landmarks which generally specify the areas of the nose, eyes, mouth, etc on the face, classified by 68 key points, with coordinates (x, y), for that face. With Facial Keypoints, we can achieve facial recognition, emotion recognition, etc.","headline":"Facial Keypoint Detection using CNN &amp; PyTorch","mainEntityOfPage":{"@type":"WebPage","@id":"https://ksheersaagr.github.io/blog/2019/12/facial-keypoint-detection-using-cnn-pytorch/"},"url":"https://ksheersaagr.github.io/blog/2019/12/facial-keypoint-detection-using-cnn-pytorch/"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/blog/assets/main.css">
+  <link rel="stylesheet" href="/blog/assets/trac.css"><link type="application/atom+xml" rel="alternate" href="https://ksheersaagr.github.io/blog/feed.xml" title="Krunal Kshirsagar" /><!---
+  <link rel="shortcut icon" href="/favicon.png">
+  -->
+  <link rel="shortcut icon" type="image/png" href="/blog/favicon.png">
+
+  <!-- Katex Math (use defer to speed page load) -->
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"
+        integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq"
+        crossorigin="anonymous">
+  <script defer
+          src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"
+          integrity="sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz"
+          crossorigin="anonymous"></script>
+  <script defer
+          src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"
+          integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI"
+          crossorigin="anonymous"
+          onload='renderMathInElement(document.body,{delimiters: [{left: "\\[",
+          right: "\\]", display: true}, {left: "$", right: "$", display: false}]})'></script>
+</head>
+</head>
+<body>
+<div class='content'><div class='nav'>
+    <ul class='wrap'>
+        <!---<li><b><a href='/blog/' style="font-size:20px; color:black; padding-right: 350px"; class="split">Krunal Kshirsagar</a></b></li>-->
+        <li><a href='/blog'><img src="/blog/images/home-logo-1.svg" alt="Home" style="width:20px;height:20px;"></a></li>
+        <li><a href='/blog/about'><img src="/blog/images/about-logo.svg" alt="About" style="width:20px;height:20px;"></a></li>
+        <li><a href="https://github.com/ksheersaagr"><img src="/blog/images/github-logo.svg" alt="Github" style="width:20px;height:20px;"></a></li>
+        <li><a href="https://www.linkedin.com/in/krunal-kshirsagar/"><img src="/blog/images/linkedin-logo.svg" alt="Linkedin" style="width:20px;height:20px;"></a></li>
+        <li><a href="mailto:krunalkshirsagar29@gmail.com"><img src="/blog/images/mail-logo.svg" alt="Mail" style="width:20px;height:20px;"></a></li>
+    </ul>
+</div>
+<div class='front-matter'>
+    <div class='wrap'>
+        <h1>Facial Keypoint Detection using CNN & PyTorch</h1>
+        <h4></h4>
+        <div class='bylines'>
+            <div class='byline'>
+                <h3>Published by Krunal Kshirsagar</h3>
+                <p>01 December 2019</p>
+            </div>
+        </div>
+        <div class='clear'></div>
+    </div>
+</div>
+<div class='wrap article'>
+    <p>Facial Keypoints are also called Facial Landmarks which generally specify the areas of the nose, eyes, mouth, etc on the face, classified by <strong>68 key points, with coordinates (x, y), for that face</strong>. With Facial Keypoints, we can achieve facial recognition, emotion recognition, etc.</p>
+
+<p><img src="/blog/images/2019-12-01-facial-keypoint-detection-using-cnn-pytorch-dots-represents-keypoints.png" /></p>
+
+<h2 id="selecting-the-dataset">Selecting the Dataset:</h2>
+
+<p>We’ll be using <a href="https://www.cs.tau.ac.il/~wolf/ytfaces/">YouTube Faces Dataset</a>. It is a dataset that contains 3,425 face videos designed for studying the problem of unconstrained face recognition in videos. These videos have been fed through processing steps and turned into sets of image frames containing one face and the associated keypoints.</p>
+
+<h2 id="training-and-test-data">Training and Test Data:</h2>
+
+<blockquote>
+  <p><em>This facial keypoints dataset consists of 5770 color images. All of these images are separated into either a training or a test set of data. 3462 of these images are training images, for you to use as you create a model to predict keypoints. 2308 are test images, which will be used to test the accuracy of your model.</em></p>
+</blockquote>
+
+<h2 id="pre-processing-the-data">Pre-Processing the Data:</h2>
+
+<p>In order to feed the data(images) into the neural network, we have to transform the images into a fixed dimensional size and a standard color range by converting the <a href="https://rickwierenga.com/blog/fast.ai/FastAI2019-8.html">numpy arrays to Pytorch Tensors</a>for faster computation.</p>
+
+<h3 id="transforms">Transforms:</h3>
+<ul>
+  <li>
+    <h4 id="normalize"><code class="highlighter-rouge">Normalize</code>:</h4>
+    <p>to convert a color image to grayscale values with a range of [0, 1] and normalize the keypoints to be in a range of about [-1, 1].</p>
+  </li>
+  <li>
+    <h4 id="rescale"><code class="highlighter-rouge">Rescale</code>:</h4>
+    <p>to rescale an image to a desired size.</p>
+  </li>
+  <li>
+    <h4 id="randomcrop"><code class="highlighter-rouge">RandomCrop</code>:</h4>
+    <p>to crop an image randomly.</p>
+  </li>
+  <li>
+    <h4 id="totensor"><code class="highlighter-rouge">ToTensor</code>:</h4>
+    <p>to convert numpy images to torch images.</p>
+  </li>
+</ul>
+
+<p>Using Transformation techniques:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># test out some of these transforms
+</span><span class="n">rescale</span> <span class="o">=</span> <span class="n">Rescale</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">crop</span> <span class="o">=</span> <span class="n">RandomCrop</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
+<span class="n">composed</span> <span class="o">=</span> <span class="n">transforms</span><span class="p">.</span><span class="n">Compose</span><span class="p">([</span><span class="n">Rescale</span><span class="p">(</span><span class="mi">250</span><span class="p">),</span>
+                               <span class="n">RandomCrop</span><span class="p">(</span><span class="mi">224</span><span class="p">)])</span>
+
+<span class="c1"># apply the transforms to a sample image
+</span><span class="n">test_num</span> <span class="o">=</span> <span class="mi">500</span>
+<span class="n">sample</span> <span class="o">=</span> <span class="n">face_dataset</span><span class="p">[</span><span class="n">test_num</span><span class="p">]</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">tx</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="n">rescale</span><span class="p">,</span> <span class="n">crop</span><span class="p">,</span> <span class="n">composed</span><span class="p">]):</span>
+    <span class="n">transformed_sample</span> <span class="o">=</span> <span class="n">tx</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">plt</span><span class="p">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    <span class="n">ax</span><span class="p">.</span><span class="n">set_title</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">tx</span><span class="p">).</span><span class="n">__name__</span><span class="p">)</span>
+    <span class="n">show_keypoints</span><span class="p">(</span><span class="n">transformed_sample</span><span class="p">[</span><span class="s">'image'</span><span class="p">],</span> <span class="n">transformed_sample</span><span class="p">[</span><span class="s">'keypoints'</span><span class="p">])</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><strong>Output of Transformation:</strong></p>
+
+<p><img src="/blog/images/2019-12-01-facial-keypoint-detection-using-cnn-pytorch-output-of-transformation.png" /></p>
+
+<p><strong>Creating the Transformed Dataset:</strong></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># define the data tranform
+# order matters! i.e. rescaling should come before a smaller crop
+</span><span class="n">data_transform</span> <span class="o">=</span> <span class="n">transforms</span><span class="p">.</span><span class="n">Compose</span><span class="p">([</span><span class="n">Rescale</span><span class="p">(</span><span class="mi">250</span><span class="p">),</span>
+                                     <span class="n">RandomCrop</span><span class="p">(</span><span class="mi">224</span><span class="p">),</span>
+                                     <span class="n">Normalize</span><span class="p">(),</span>
+                                     <span class="n">ToTensor</span><span class="p">()])</span>
+
+<span class="c1"># create the transformed dataset
+</span><span class="n">transformed_dataset</span> <span class="o">=</span> <span class="n">FacialKeypointsDataset</span><span class="p">(</span><span class="n">csv_file</span><span class="o">=</span><span class="s">'/data/training_frames_keypoints.csv'</span><span class="p">,</span>
+                                             <span class="n">root_dir</span><span class="o">=</span><span class="s">'/data/training/'</span><span class="p">,</span>
+                                             <span class="n">transform</span><span class="o">=</span><span class="n">data_transform</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Here <strong><em>224 * 224px</em></strong> are standardized input image size that is obtained by transforms and the output class scores shall be <strong><em>136</em></strong> i.e. <strong><em>136/2 = 68</em></strong></p>
+
+<p><img src="/blog/images/2019-12-01-facial-keypoint-detection-using-cnn-pytorch-standard-input-size-of-images.png" /></p>
+
+<h2 id="define-the-cnn-architecture">Define the CNN Architecture:</h2>
+
+<p>After you’ve looked at the data you’re working with and, in this case, know the shapes of the images and of the keypoints, you are ready to define a convolutional neural network that can learn from this data.</p>
+
+<h4 id="define-all-the-layers-of-this-cnn-the-only-requirements-are">Define all the layers of this CNN, the only requirements are:</h4>
+
+<ol>
+  <li>This network takes in a square (same width and height), grayscale image as input.</li>
+  <li>It ends with a linear layer that represents the keypoints (Last layer output 136 values, 2 for each of the 68 keypoint (x, y) pairs).</li>
+</ol>
+
+<p><strong>Shape of a Convolutional Layer:</strong></p>
+<blockquote>
+  <ul>
+    <li>K — out_channels : the number of filters in the convolutional layer</li>
+    <li>F — kernel_size</li>
+    <li>S — the stride of the convolution</li>
+    <li>P — the padding</li>
+    <li>W — the width/height (square) of the previous layer</li>
+  </ul>
+</blockquote>
+
+<p>The <strong>self.conv1</strong> = nn.Conv2d(in_channels, out_channels, kernel_size, stride=1, padding=0)</p>
+
+<p><strong>output size = (W-F)/S +1</strong> = (224–5)/1 +1 = 220, the output Tensor for one image will have the dimensions: (1, 220, 220)</p>
+
+<p><strong>1</strong> = input image channel (grayscale), <strong>32</strong> = output channels/feature maps, <strong>5x5</strong> = square convolution kernel</p>
+
+<h3 id="cnn-architecture">CNN Architecture:</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="bp">self</span><span class="p">.</span><span class="n">conv1</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="c1"># output size = (W-F)/S +1 = (224-5)/1 + 1 = 220
+</span><span class="bp">self</span><span class="p">.</span><span class="n">pool1</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">MaxPool2d</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="c1"># 220/2 = 110  the output Tensor for one image, will have the dimensions: (32, 110, 110)
+</span>
+<span class="bp">self</span><span class="p">.</span><span class="n">conv2</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span><span class="mi">64</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+<span class="c1"># output size = (W-F)/S +1 = (110-3)/1 + 1 = 108
+</span><span class="bp">self</span><span class="p">.</span><span class="n">pool2</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">MaxPool2d</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="c1">#108/2=54   the output Tensor for one image, will have the dimensions: (64, 54, 54)
+</span>
+<span class="bp">self</span><span class="p">.</span><span class="n">conv3</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span><span class="mi">128</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+<span class="c1"># output size = (W-F)/S +1 = (54-3)/1 + 1 = 52
+</span><span class="bp">self</span><span class="p">.</span><span class="n">pool3</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">MaxPool2d</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="c1">#52/2=26    the output Tensor for one image, will have the dimensions: (128, 26, 26)
+</span>
+<span class="bp">self</span><span class="p">.</span><span class="n">conv4</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span><span class="mi">256</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+<span class="c1"># output size = (W-F)/S +1 = (26-3)/1 + 1 = 24
+</span><span class="bp">self</span><span class="p">.</span><span class="n">pool4</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">MaxPool2d</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="c1">#24/2=12   the output Tensor for one image, will have the dimensions: (256, 12, 12)
+</span>
+<span class="bp">self</span><span class="p">.</span><span class="n">conv5</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span><span class="mi">512</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="c1"># output size = (W-F)/S +1 = (12-1)/1 + 1 = 12
+</span><span class="bp">self</span><span class="p">.</span><span class="n">pool5</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">MaxPool2d</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="c1">#12/2=6    the output Tensor for one image, will have the dimensions: (512, 6, 6)
+</span>
+<span class="c1">#Linear Layer
+</span><span class="bp">self</span><span class="p">.</span><span class="n">fc1</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">512</span><span class="o">*</span><span class="mi">6</span><span class="o">*</span><span class="mi">6</span><span class="p">,</span> <span class="mi">1024</span><span class="p">)</span>
+<span class="bp">self</span><span class="p">.</span><span class="n">fc2</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">1024</span><span class="p">,</span> <span class="mi">136</span><span class="p">)</span>
+</code></pre></div></div>
+<p>We can add <a href="https://machinelearningmastery.com/dropout-for-regularizing-deep-neural-networks/"><code class="highlighter-rouge">Dropouts</code></a> for Regularizing Deep Neural Networks. One of the secrets to achieving better results is to keep the probability(p) of dropouts within the range of 0.1 to 0.5. also, it’s better to have multiple dropouts of varying values of probability(p).</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="bp">self</span><span class="p">.</span><span class="n">drop1</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Dropout</span><span class="p">(</span><span class="n">p</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">)</span>
+<span class="bp">self</span><span class="p">.</span><span class="n">drop2</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Dropout</span><span class="p">(</span><span class="n">p</span> <span class="o">=</span> <span class="mf">0.2</span><span class="p">)</span>
+<span class="bp">self</span><span class="p">.</span><span class="n">drop3</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Dropout</span><span class="p">(</span><span class="n">p</span> <span class="o">=</span> <span class="mf">0.25</span><span class="p">)</span>
+<span class="bp">self</span><span class="p">.</span><span class="n">drop4</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Dropout</span><span class="p">(</span><span class="n">p</span> <span class="o">=</span> <span class="mf">0.25</span><span class="p">)</span>
+<span class="bp">self</span><span class="p">.</span><span class="n">drop5</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Dropout</span><span class="p">(</span><span class="n">p</span> <span class="o">=</span> <span class="mf">0.3</span><span class="p">)</span>
+<span class="bp">self</span><span class="p">.</span><span class="n">drop6</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Dropout</span><span class="p">(</span><span class="n">p</span> <span class="o">=</span> <span class="mf">0.4</span><span class="p">)</span>
+</code></pre></div></div>
+<ul>
+  <li><strong>Next, We’ll construct our Feed-Forward Network having <a href="https://ml-cheatsheet.readthedocs.io/en/latest/activation_functions.html"><code class="highlighter-rouge">ReLU</code></a> as our activation function.</strong></li>
+</ul>
+
+<h4 id="feedforward-neural-network">Feedforward Neural Network:</h4>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="nb">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="c1">## TODO: Define the feedforward behavior of this model</span>
+        <span class="c1">## x is the input image and, as an example, here you may choose to include a pool/conv step:</span>
+        <span class="c1">## x = self.pool(F.relu(self.conv1(x)))</span>
+      
+        <span class="n">x</span> <span class="o">=</span> <span class="nb">self</span><span class="p">.</span><span class="nf">pool1</span><span class="p">(</span><span class="no">F</span><span class="p">.</span><span class="nf">relu</span><span class="p">(</span><span class="nb">self</span><span class="p">.</span><span class="nf">conv1</span><span class="p">(</span><span class="n">x</span><span class="p">)))</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="nb">self</span><span class="p">.</span><span class="nf">drop1</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="nb">self</span><span class="p">.</span><span class="nf">pool2</span><span class="p">(</span><span class="no">F</span><span class="p">.</span><span class="nf">relu</span><span class="p">(</span><span class="nb">self</span><span class="p">.</span><span class="nf">conv2</span><span class="p">(</span><span class="n">x</span><span class="p">)))</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="nb">self</span><span class="p">.</span><span class="nf">drop2</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="nb">self</span><span class="p">.</span><span class="nf">pool3</span><span class="p">(</span><span class="no">F</span><span class="p">.</span><span class="nf">relu</span><span class="p">(</span><span class="nb">self</span><span class="p">.</span><span class="nf">conv3</span><span class="p">(</span><span class="n">x</span><span class="p">)))</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="nb">self</span><span class="p">.</span><span class="nf">drop3</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="nb">self</span><span class="p">.</span><span class="nf">pool4</span><span class="p">(</span><span class="no">F</span><span class="p">.</span><span class="nf">relu</span><span class="p">(</span><span class="nb">self</span><span class="p">.</span><span class="nf">conv4</span><span class="p">(</span><span class="n">x</span><span class="p">)))</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="nb">self</span><span class="p">.</span><span class="nf">drop4</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="nb">self</span><span class="p">.</span><span class="nf">pool5</span><span class="p">(</span><span class="no">F</span><span class="p">.</span><span class="nf">relu</span><span class="p">(</span><span class="nb">self</span><span class="p">.</span><span class="nf">conv5</span><span class="p">(</span><span class="n">x</span><span class="p">)))</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="nb">self</span><span class="p">.</span><span class="nf">drop5</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">.</span><span class="nf">view</span><span class="p">(</span><span class="n">x</span><span class="p">.</span><span class="nf">size</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="no">F</span><span class="p">.</span><span class="nf">relu</span><span class="p">(</span><span class="nb">self</span><span class="p">.</span><span class="nf">fc1</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="nb">self</span><span class="p">.</span><span class="nf">drop6</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="nb">self</span><span class="p">.</span><span class="nf">fc2</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="c1"># a modified x, having gone through all the layers of your model, should be returned</span>
+        <span class="k">return</span> <span class="n">x</span></code></pre></figure>
+
+<ul>
+  <li><strong>Create the transformed Facial Keypoints Dataset, just as before</strong></li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># create the transformed dataset
+</span><span class="n">transformed_dataset</span> <span class="o">=</span> <span class="n">FacialKeypointsDataset</span><span class="p">(</span><span class="n">csv_file</span><span class="o">=</span><span class="s">'/data/training_frames_keypoints.csv'</span><span class="p">,</span>
+                                             <span class="n">root_dir</span><span class="o">=</span><span class="s">'/data/training/'</span><span class="p">,</span>
+                                             <span class="n">transform</span><span class="o">=</span><span class="n">data_transform</span><span class="p">)</span>
+
+
+<span class="k">print</span><span class="p">(</span><span class="s">'Number of images: '</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">transformed_dataset</span><span class="p">))</span>
+
+<span class="c1"># iterate through the transformed dataset and print some stats about the first few samples
+</span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+    <span class="n">sample</span> <span class="o">=</span> <span class="n">transformed_dataset</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">sample</span><span class="p">[</span><span class="s">'image'</span><span class="p">].</span><span class="n">size</span><span class="p">(),</span> <span class="n">sample</span><span class="p">[</span><span class="s">'keypoints'</span><span class="p">].</span><span class="n">size</span><span class="p">())</span>
+</code></pre></div></div>
+
+<ul>
+  <li><strong>Batching and loading data</strong><br />
+<em>Next, having defined the transformed dataset, we can use PyTorch’s DataLoader class to load the training data in batches of whatever size as well as to shuffle the data for training the model.</em></li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># load training data in batches
+</span><span class="n">batch_size</span> <span class="o">=</span> <span class="mi">10</span>
+
+<span class="n">train_loader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">transformed_dataset</span><span class="p">,</span> 
+                          <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span>
+                          <span class="n">shuffle</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> 
+                          <span class="n">num_workers</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</code></pre></div></div>
+
+<ul>
+  <li><strong>Train the CNN Model and Track the loss</strong></li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">## TODO: Define the loss and optimization
+</span><span class="kn">import</span> <span class="nn">torch.optim</span> <span class="k">as</span> <span class="n">optim</span>
+
+<span class="n">criterion</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">SmoothL1Loss</span><span class="p">()</span>
+
+<span class="n">optimizer</span> <span class="o">=</span> <span class="n">optim</span><span class="p">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">net</span><span class="p">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span> <span class="o">=</span> <span class="mf">0.001</span><span class="p">)</span>
+</code></pre></div></div>
+<p><strong><em>Note: Please try using a different criterion <a href="https://pytorch.org/docs/master/_modules/torch/nn/modules/loss.html"><code class="highlighter-rouge">Loss function</code></a> and also have the value of the learning rate set to the lowest number possible; in this case(0.001).</em></strong></p>
+
+<ul>
+  <li>
+    <p><strong>Training and Initial Observation</strong><br />
+To quickly observe how our model is training and decide on whether or not we should modify its structure or hyperparameters, you’re encouraged to start off with just one or two epochs at first. As you train, note how your model’s loss behaves over time: does it decrease quickly at first and then slow down? Does it take a while to decrease in the first place? What happens if we change the batch size of your training data or modify your loss function? etc.<br />
+Use these initial observations to make changes to your model and decide on the best architecture before you train for many epochs and create a final model.</p>
+  </li>
+  <li>
+    <p><strong>Training Loss:</strong><br />
+<img src="/blog/images/2019-12-01-facial-keypoint-detection-using-cnn-pytorch-training-loss.png" /><br />
+Once you’ve found a good model, save it. So that you can load and use it later.<br />
+After you’ve trained a neural network to detect facial keypoints, you can then apply this network to any image that includes faces.</p>
+  </li>
+  <li>
+    <p><strong>Detect faces in any image using Haar Cascade Detector in the project</strong></p>
+  </li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># load in a haar cascade classifier for detecting frontal faces
+</span><span class="n">face_cascade</span> <span class="o">=</span> <span class="n">cv2</span><span class="p">.</span><span class="n">CascadeClassifier</span><span class="p">(</span><span class="s">'detector_architectures/haarcascade_frontalface_default.xml'</span><span class="p">)</span>
+
+<span class="c1"># run the detector
+# the output here is an array of detections; the corners of each detection box
+# if necessary, modify these parameters until you successfully identify every face in a given image
+</span><span class="n">faces</span> <span class="o">=</span> <span class="n">face_cascade</span><span class="p">.</span><span class="n">detectMultiScale</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># make a copy of the original image to plot detections on
+</span><span class="n">image_with_detections</span> <span class="o">=</span> <span class="n">image</span><span class="p">.</span><span class="n">copy</span><span class="p">()</span>
+
+<span class="c1"># loop over the detected faces, mark the image where each face is found
+</span><span class="k">for</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">w</span><span class="p">,</span><span class="n">h</span><span class="p">)</span> <span class="ow">in</span> <span class="n">faces</span><span class="p">:</span>
+    <span class="c1"># draw a rectangle around each detected face
+</span>    <span class="c1"># you may also need to change the width of the rectangle drawn depending on image resolution
+</span>    <span class="n">cv2</span><span class="p">.</span><span class="n">rectangle</span><span class="p">(</span><span class="n">image_with_detections</span><span class="p">,(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">),(</span><span class="n">x</span><span class="o">+</span><span class="n">w</span><span class="p">,</span><span class="n">y</span><span class="o">+</span><span class="n">h</span><span class="p">),(</span><span class="mi">255</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span><span class="mi">3</span><span class="p">)</span> 
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="mi">9</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="p">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image_with_detections</span><span class="p">)</span>
+</code></pre></div></div>
+<ul>
+  <li><strong>Haar Cascade Detector</strong><br />
+<img src="/blog/images/2019-12-01-facial-keypoint-detection-using-cnn-pytorch-haar-cascade-detector.png" />
+    <h3 id="transform-each-detected-face-into-an-input-tensor">Transform each detected face into an input Tensor</h3>
+    <p>You’ll need to perform the following steps for each detected face:</p>
+    <ol>
+      <li>Convert the face from RGB to grayscale</li>
+      <li>Normalize the grayscale image so that its color range falls in [0,1] instead of [0,255]</li>
+      <li>Rescale the detected face to be the expected square size for your CNN (224x224, suggested)</li>
+      <li>Reshape the numpy image into a torch image <br />
+<img src="/blog/images/2019-12-01-facial-keypoint-detection-using-cnn-pytorch-mitchelle-keypoints.png" /></li>
+    </ol>
+  </li>
+</ul>
+
+<h3 id="detect-and-display-the-predicted-keypoints">Detect and display the predicted keypoints</h3>
+<p>After each face has been appropriately converted into an input Tensor for our network to see as input, we can apply the network to each face. The output should be the predicted facial keypoints.<br />
+These keypoints will need to be “un-normalized” for display, and you may find it helpful to write a helper function like <code class="highlighter-rouge">show_keypoints</code>.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">showpoints</span><span class="p">(</span><span class="n">image</span><span class="p">,</span><span class="n">keypoints</span><span class="p">):</span>
+    
+    <span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">()</span>
+    
+    <span class="n">keypoints</span> <span class="o">=</span> <span class="n">keypoints</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">numpy</span><span class="p">()</span>
+    <span class="n">keypoints</span> <span class="o">=</span> <span class="n">keypoints</span> <span class="o">*</span> <span class="mf">60.0</span> <span class="o">+</span> <span class="mi">68</span>
+    <span class="n">keypoints</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">keypoints</span><span class="p">,</span> <span class="p">(</span><span class="mi">68</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+    
+    <span class="n">plt</span><span class="p">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s">'gray'</span><span class="p">)</span>
+    <span class="n">plt</span><span class="p">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">keypoints</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">keypoints</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">s</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s">'.'</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s">'r'</span><span class="p">)</span>
+    
+
+<span class="kn">from</span> <span class="nn">torch.autograd</span> <span class="kn">import</span> <span class="n">Variable</span>
+<span class="n">image_copy</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">copy</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+
+<span class="c1"># loop over the detected faces from your haar cascade
+</span><span class="k">for</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">w</span><span class="p">,</span><span class="n">h</span><span class="p">)</span> <span class="ow">in</span> <span class="n">faces</span><span class="p">:</span>
+    
+    <span class="c1"># Select the region of interest that is the face in the image 
+</span>    <span class="n">roi</span> <span class="o">=</span> <span class="n">image_copy</span><span class="p">[</span><span class="n">y</span><span class="p">:</span><span class="n">y</span><span class="o">+</span><span class="n">h</span><span class="p">,</span><span class="n">x</span><span class="p">:</span><span class="n">x</span><span class="o">+</span><span class="n">w</span><span class="p">]</span>
+
+    <span class="c1">## TODO: Convert the face region from RGB to grayscale
+</span>    <span class="n">roi</span> <span class="o">=</span> <span class="n">cv2</span><span class="p">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">roi</span><span class="p">,</span> <span class="n">cv2</span><span class="p">.</span><span class="n">COLOR_RGB2GRAY</span><span class="p">)</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">roi</span>
+
+    <span class="c1">## TODO: Normalize the grayscale image so that its color range falls in [0,1] instead of [0,255]
+</span>    <span class="n">roi</span> <span class="o">=</span> <span class="n">roi</span><span class="o">/</span><span class="mf">255.0</span>
+    
+    <span class="c1">## TODO: Rescale the detected face to be the expected square size for your CNN (224x224, suggested)
+</span>    <span class="n">roi</span> <span class="o">=</span> <span class="n">cv2</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span><span class="n">roi</span><span class="p">,</span> <span class="p">(</span><span class="mi">224</span><span class="p">,</span><span class="mi">224</span><span class="p">))</span>
+    
+    <span class="c1">## TODO: Reshape the numpy image shape (H x W x C) into a torch image shape (C x H x W)
+</span>    <span class="n">roi</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">roi</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">roi</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">roi</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    
+    <span class="c1">## TODO: Make facial keypoint predictions using your loaded, trained network 
+</span>    <span class="n">roi_torch</span> <span class="o">=</span> <span class="n">Variable</span><span class="p">(</span><span class="n">torch</span><span class="p">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">roi</span><span class="p">))</span>
+    
+    <span class="n">roi_torch</span> <span class="o">=</span> <span class="n">roi_torch</span><span class="p">.</span><span class="nb">type</span><span class="p">(</span><span class="n">torch</span><span class="p">.</span><span class="n">FloatTensor</span><span class="p">)</span>
+    <span class="n">keypoints</span> <span class="o">=</span> <span class="n">net</span><span class="p">(</span><span class="n">roi_torch</span><span class="p">)</span>
+
+    <span class="c1">## TODO: Display each detected face and the corresponding keypoints        
+</span>    <span class="n">showpoints</span><span class="p">(</span><span class="n">image</span><span class="p">,</span><span class="n">keypoints</span><span class="p">)</span>
+</code></pre></div></div>
+<h4 id="output">Output:</h4>
+<p><img src="/blog/images/2019-12-01-facial-keypoint-detection-using-cnn-pytorch-facial-keypoints-detected.png" /></p>
+
+<p><strong>Feel free to check out my project on <a href="https://github.com/ksheersaagr/Facial_Keypoint_Detection">Github</a>.</strong></p>
+
+
+</div>
+<div id='bibliography'>
+    <div class='wrap'>
+        <ol class="bibliography"></ol>
+    </div>
+</div>
+
+</div>
+</body>
+</html>

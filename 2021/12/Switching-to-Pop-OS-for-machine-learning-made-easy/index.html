@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Switching to Pop! OS for machine learning made easy | Krunal Kshirsagar</title>
+<meta name="generator" content="Jekyll v4.0.1" />
+<meta property="og:title" content="Switching to Pop! OS for machine learning made easy" />
+<meta name="author" content="krunal kshirsagar" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Some of the major components of Pop!_OS are written in Rust. Its 21.04 version was released on 29 June 2021 and is based upon Ubuntu 21.04. It included the COSMIC (Computer Operating System Main Interface Components) desktop, based on GNOME, but with a custom dock and shortcut controls. Also, it is said that in the future updates System76 will be ditching GNOME and will introduce a new Desktop Environment all together written in Rust (expect it to be heck of alot faster!) based on Pop! OS instead. Hmm..Going the apple way it seems but remaining open source of course. However it won’t be an easy task, wish them luck and I hope it comes out." />
+<meta property="og:description" content="Some of the major components of Pop!_OS are written in Rust. Its 21.04 version was released on 29 June 2021 and is based upon Ubuntu 21.04. It included the COSMIC (Computer Operating System Main Interface Components) desktop, based on GNOME, but with a custom dock and shortcut controls. Also, it is said that in the future updates System76 will be ditching GNOME and will introduce a new Desktop Environment all together written in Rust (expect it to be heck of alot faster!) based on Pop! OS instead. Hmm..Going the apple way it seems but remaining open source of course. However it won’t be an easy task, wish them luck and I hope it comes out." />
+<link rel="canonical" href="https://ksheersaagr.github.io/blog/2021/12/Switching-to-Pop-OS-for-machine-learning-made-easy/" />
+<meta property="og:url" content="https://ksheersaagr.github.io/blog/2021/12/Switching-to-Pop-OS-for-machine-learning-made-easy/" />
+<meta property="og:site_name" content="Krunal Kshirsagar" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-12-04T00:00:00+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Switching to Pop! OS for machine learning made easy" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"krunal kshirsagar"},"dateModified":"2021-12-04T00:00:00+00:00","datePublished":"2021-12-04T00:00:00+00:00","description":"Some of the major components of Pop!_OS are written in Rust. Its 21.04 version was released on 29 June 2021 and is based upon Ubuntu 21.04. It included the COSMIC (Computer Operating System Main Interface Components) desktop, based on GNOME, but with a custom dock and shortcut controls. Also, it is said that in the future updates System76 will be ditching GNOME and will introduce a new Desktop Environment all together written in Rust (expect it to be heck of alot faster!) based on Pop! OS instead. Hmm..Going the apple way it seems but remaining open source of course. However it won’t be an easy task, wish them luck and I hope it comes out.","headline":"Switching to Pop! OS for machine learning made easy","mainEntityOfPage":{"@type":"WebPage","@id":"https://ksheersaagr.github.io/blog/2021/12/Switching-to-Pop-OS-for-machine-learning-made-easy/"},"url":"https://ksheersaagr.github.io/blog/2021/12/Switching-to-Pop-OS-for-machine-learning-made-easy/"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/blog/assets/main.css">
+  <link rel="stylesheet" href="/blog/assets/trac.css"><link type="application/atom+xml" rel="alternate" href="https://ksheersaagr.github.io/blog/feed.xml" title="Krunal Kshirsagar" /><!---
+  <link rel="shortcut icon" href="/favicon.png">
+  -->
+  <link rel="shortcut icon" type="image/png" href="/blog/favicon.png">
+
+  <!-- Katex Math (use defer to speed page load) -->
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"
+        integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq"
+        crossorigin="anonymous">
+  <script defer
+          src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"
+          integrity="sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz"
+          crossorigin="anonymous"></script>
+  <script defer
+          src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"
+          integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI"
+          crossorigin="anonymous"
+          onload='renderMathInElement(document.body,{delimiters: [{left: "\\[",
+          right: "\\]", display: true}, {left: "$", right: "$", display: false}]})'></script>
+</head>
+</head>
+<body>
+<div class='content'><div class='nav'>
+    <ul class='wrap'>
+        <!---<li><b><a href='/blog/' style="font-size:20px; color:black; padding-right: 350px"; class="split">Krunal Kshirsagar</a></b></li>-->
+        <li><a href='/blog'><img src="/blog/images/home-logo-1.svg" alt="Home" style="width:20px;height:20px;"></a></li>
+        <li><a href='/blog/about'><img src="/blog/images/about-logo.svg" alt="About" style="width:20px;height:20px;"></a></li>
+        <li><a href="https://github.com/ksheersaagr"><img src="/blog/images/github-logo.svg" alt="Github" style="width:20px;height:20px;"></a></li>
+        <li><a href="https://www.linkedin.com/in/krunal-kshirsagar/"><img src="/blog/images/linkedin-logo.svg" alt="Linkedin" style="width:20px;height:20px;"></a></li>
+        <li><a href="mailto:krunalkshirsagar29@gmail.com"><img src="/blog/images/mail-logo.svg" alt="Mail" style="width:20px;height:20px;"></a></li>
+    </ul>
+</div>
+<div class='front-matter'>
+    <div class='wrap'>
+        <h1>Switching to Pop! OS for machine learning made easy</h1>
+        <h4></h4>
+        <div class='bylines'>
+            <div class='byline'>
+                <h3>Published by Krunal Kshirsagar</h3>
+                <p>04 December 2021</p>
+            </div>
+        </div>
+        <div class='clear'></div>
+    </div>
+</div>
+<div class='wrap article'>
+    <p>Some of the major components of Pop!_OS are written in Rust. Its 21.04 version was released on 29 June 2021 and is based upon Ubuntu 21.04. It included the COSMIC (Computer Operating System Main Interface Components) desktop, based on GNOME, but with a custom dock and shortcut controls. Also, it is said that in the future updates System76 will be ditching GNOME and will introduce a new Desktop Environment all together written in Rust (expect it to be heck of alot faster!) based on Pop! OS instead. Hmm..Going the apple way it seems but remaining open source of course. However it won’t be an easy task, wish them luck and I hope it comes out.</p>
+
+<p>References: <a href="https://www.reddit.com/r/linux_gaming/comments/qo4bdo/pop_os_to_use_it_own_desktop_environment_written/">[here]</a><a href="https://www.reddit.com/r/linux/comments/qododc/pop_os_to_build_a_new_independent_desktop/">[here]</a></p>
+
+<h1 id="table-of-contents">Table of Contents</h1>
+
+<ol>
+  <li><a href="#setup">Setup</a>
+    <ul>
+      <li><a href="#download">Download</a></li>
+      <li><a href="#bootable-drive">Making a bootable USB drive</a></li>
+      <li><a href="#installing-os">Installing Pop! OS</a></li>
+      <li><a href="#update-upgrade">Initial Update &amp; Upgrade</a></li>
+      <li><a href="#maximise-button">Enable maximise button</a></li>
+      <li><a href="#dash-dock">Dash to Dock</a></li>
+      <li><a href="#audio">Audio</a>
+        <ul>
+          <li><a href="#restricted-formats">Installing Restricted Formats</a></li>
+          <li><a href="#sound-issues">Sound Issues</a></li>
+        </ul>
+      </li>
+      <li><a href="#backup-restore">Backup &amp; Restore(Not Mandatory)</a></li>
+    </ul>
+  </li>
+  <li><a href="#installing-conda">Installing Conda</a>
+    <ul>
+      <li><a href="#conda-commands">Useful conda commands</a></li>
+    </ul>
+  </li>
+  <li><a href="#julia-lang">Installing Julia</a>
+    <ul>
+      <li><a href="#ijulia-kernel">Installing IJulia kernel</a></li>
+      <li><a href="#cuda-jl">Installing CUDA.jl</a></li>
+    </ul>
+  </li>
+  <li><a href="#installing-nodejs">Installing nodejs(Optional)</a></li>
+  <li><a href="#installing-git">Installing Git</a></li>
+  <li><a href="#installing-pytorch">Installing Pytorch</a>
+    <ul>
+      <li><a href="#pytorch-geometric">Installing Pytorch Geometric</a></li>
+    </ul>
+  </li>
+  <li><a href="#installing-cuda">Installing Cuda</a>
+    <ul>
+      <li><a href="#installing-cuda-toolkit">Installing Cuda toolkit</a></li>
+      <li><a href="#installing-cudnn">Installing CuDNN</a></li>
+    </ul>
+  </li>
+  <li><a href="#installing-jax">Installing JAX</a></li>
+  <li><a href="#installing-vs-code">Installing VS Code</a></li>
+</ol>
+
+<h2 id="1-setup">1. <a name="setup">Setup</a></h2>
+
+<h3 id="-download-"><a name="download"> Download </a></h3>
+<ul>
+  <li>Download Pop! OS from <strong><a href="https://pop.system76.com/">here</a></strong>. click <strong>Download</strong>, then choose from the current release (default) or if you have Nvidia GPU then please download the <strong>NVIDIA</strong> version(Pop! OS provide Nvidia drivers for GPU support out of the box).</li>
+  <li>Download PowerISO from <strong><a href="https://www.poweriso.com/download.php">here</a></strong>.</li>
+</ul>
+
+<h3 id="making-a-bootable-usb-drive-"><a name="bootable-drive">Making a bootable USB drive </a></h3>
+<p>Install the poweriso.exe file. After installing, open the poweriso software then go to <strong>Tools</strong> =&gt; <strong>Create bootable USB drive</strong> then hit OK, then <strong>select the source file(Pop! OS image file with .iso extension)</strong>, <strong>select destination USB drive</strong> and hit <strong>Start</strong>. It will take couple of minutes to complete the task.</p>
+
+<h3 id="installing-pop-os"><a name="installing-os">Installing Pop! OS</a></h3>
+<ol>
+  <li>Insert the bootable usb into the usb slot and reboot the system.</li>
+  <li>Keep hitting <strong>F10 or F11</strong> key depending on your systems motherboard (mine is of MSI - so it’s F11 key) while your system restarts.</li>
+  <li>In the bootloader menu select your bootable usb drive.</li>
+  <li>Next select the options of your choice - mainly the language, time zone &amp; keyboard layout etc.(better keep it to default)</li>
+  <li>Once you are in the installation window you’ll see 2 options:
+    <ol>
+      <li>Clean Install.(<strong>Warning: This will wipe all of your system’s data</strong>)</li>
+      <li>Custom (Advanced).
+ choose as per your need, I chose the 1st option to clear everything and install a fresh copy of Pop! OS.</li>
+    </ol>
+  </li>
+  <li>Then select the disk drive that you want to install the Pop! OS a fresh and hit <strong>Erase and Install.</strong></li>
+  <li>Drive Encryption: select if you want to encrypt your drive. (This will impact the performance of your system) - I chose don’t encrypt.</li>
+  <li>And then the usual stuff like select the wifi, time zone, keyboard layout, privacy location settings and connect account etc - choose as you need to and you are done with the installation.</li>
+</ol>
+
+<h3 id="initial-update--upgrade"><a name="update-upgrade">Initial Update &amp; Upgrade</a></h3>
+<p>In order to upgrade your system, execute the following commands in the terminal:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    sudo apt update
+    sudo apt full-upgrade
+</code></pre></div></div>
+
+<h3 id="enable-maximise-button"><a name="maximise-button">Enable maximise button</a></h3>
+<p>Since it’s a highly customisable OS, some functionality might not be available out of the box. For instance, the maximise button isn’t available for you to maximise the window size instead you have to double click on top of the window pane in order to maximise the window size.</p>
+
+<p>Let’s add the maximise button with the following command:</p>
+
+<p><code class="highlighter-rouge">sudo apt install gnome-tweaks</code></p>
+
+<p>Now go to applications and select <strong>tweaks</strong>. When it opens click on the <strong>Window Titlebars</strong> tab to the left and then enable <strong>Maximise</strong> toggle option under the <strong>Titlebar Buttons</strong> section.</p>
+
+<p>Check out all the different settings and configuration options to get the most out of your system.</p>
+
+<h3 id="dash-to-dock"><a name="dash-dock">Dash to Dock</a></h3>
+<p>There are a few gripes that I have but nothing that can’t be resolved with some more time under my belt with the new OS. My biggest and probably the most worrisome is the <strong>taskbar</strong>. I don’t really like that I can’t see all of my running apps on the bar. It makes switching a bit of a pain, although alt+tab isn’t the worst in the world, I would like another option if I’m having a derp moment. Please find how to customise the taskbar <strong><a href="https://support.system76.com/articles/dash-to-dock/">here</a>.</strong></p>
+
+<p><strong>Note: once you are done with the installation you should find Dash-to-Dock settings by right-clicking on the <code class="highlighter-rouge">show application</code> menu.</strong></p>
+
+<h3 id="audio"><a name="audio">Audio</a></h3>
+<h4 id="installing-restricted-formats"><a name="restricted-formats">Installing Restricted Formats</a></h4>
+<p>Pop! OS comes with few of the open source softwares. However, you will find some codecs or media format missing. Execute following commands in the terminal:</p>
+
+<p><code class="highlighter-rouge">sudo apt-get install ubuntu-restricted-extras</code></p>
+
+<p>Oh! and in the package configuration window use <strong>Tab</strong> button to select OK and Yes options.</p>
+
+<h4 id="sound-issues"><a name="sound-issues">Sound Issues</a></h4>
+<p>If you come across a sound issue, please run the following commands in the terminal and reboot the system:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    1. sudo apt purge timidity-daemon
+    2. sudo apt-get install --reinstall alsa-base pulseaudio
+    3. sudo alsa force-reload
+</code></pre></div></div>
+
+<h3 id="backup--restore"><a name="backup-restore">Backup &amp; Restore</a></h3>
+<p>Install Timeshift by running the following command in the terminal:</p>
+
+<p><code class="highlighter-rouge">sudo apt install timeshift</code></p>
+
+<p>After installing follow the instructions in the video below:</p>
+
+<div class="video">
+<div class="embed-container">
+    <iframe src="https://www.youtube.com/embed/QE0lyWodWdU" width="700" height="480" frameborder="0" allowfullscreen="">
+    </iframe>
+  </div>
+<div style="text-align:center">Timeshift tutorial.</div>
+</div>
+
+<p>and you are done with the initial setup.</p>
+
+<h2 id="2-installing-conda">2. <a name="installing-conda">Installing Conda</a></h2>
+<ol>
+  <li>
+    <p>Download the latest <code class="highlighter-rouge">.sh</code> file for linux from <strong><a href="https://www.anaconda.com/products/individual">here</a></strong>.</p>
+  </li>
+  <li>
+    <p>Open a new terminal and go to your Downloads folder:</p>
+
+    <p><code class="highlighter-rouge">cd ~/Downloads</code></p>
+  </li>
+  <li>
+    <p>Run the following command in the terminal:</p>
+
+    <p><code class="highlighter-rouge">bash ~/Downloads/Anaconda3-2021.11-Linux-x86_64.sh</code></p>
+
+    <p><strong>Note: please change the command as per the <code class="highlighter-rouge">.sh</code> file name.</strong></p>
+  </li>
+  <li>Now keep pressing <strong>Enter</strong> till it asks -
+    <ol>
+      <li>Do you accept the license terms? -&gt; Type <strong>yes</strong> and hit <strong>Enter</strong>.</li>
+      <li>Do you wish the installer to initialize Anaconda3 by running conda init? -&gt; Type yes and hit <strong>Enter</strong>.</li>
+    </ol>
+  </li>
+  <li>
+    <p>Then re-open the terminal and enter the following command:</p>
+
+    <p><code class="highlighter-rouge">source ~/.bashrc</code></p>
+  </li>
+  <li>
+    <p>Again open a new terminal and enter:</p>
+
+    <p><code class="highlighter-rouge">conda -V</code></p>
+  </li>
+</ol>
+
+<p>if it returns the conda version then the installation is successful.</p>
+
+<h3 id="useful-conda-commands"><a name="conda-commands">Useful conda commands</a></h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    1. conda activate
+    2. conda init
+    3. jupyter notebook 
+</code></pre></div></div>
+
+<h2 id="3-installing-julia">3. <a name="julia-lang">Installing Julia</a></h2>
+<ol>
+  <li>
+    <p>Download the <code class="highlighter-rouge">tar.gz</code> file from <strong><a href="https://julialang.org/downloads/">here</a></strong>.
+<strong>Under the <code class="highlighter-rouge">Current stable release:</code> section, select the <code class="highlighter-rouge">64-bit</code> version from <code class="highlighter-rouge">Generic Linux on x86</code></strong>.</p>
+  </li>
+  <li>
+    <p>Open a new terminal and go to your Downloads folder:</p>
+
+    <p><code class="highlighter-rouge">cd ~/Downloads</code></p>
+  </li>
+  <li>
+    <p>Extract the <code class="highlighter-rouge">.tar.gz</code>:</p>
+
+    <p><code class="highlighter-rouge">tar -xvzf julia-1.6.4-linux-x86_64.tar.gz</code></p>
+  </li>
+  <li>
+    <p>Copy the extracted folder to <code class="highlighter-rouge">/opt</code>:</p>
+
+    <p><code class="highlighter-rouge">sudo cp -r julia-1.6.4 /opt/</code></p>
+  </li>
+  <li>
+    <p>Create a symbolic link to julia inside the /usr/local/bin folder:</p>
+
+    <p><code class="highlighter-rouge">sudo ln -s /opt/julia-1.6.4/bin/julia /usr/local/bin/julia</code></p>
+  </li>
+  <li>
+    <p>Re-open the terminal and execute the command:</p>
+
+    <p><code class="highlighter-rouge">julia</code></p>
+  </li>
+</ol>
+
+<h3 id="installing-ijulia-kernel"><a name="ijulia-kernel">Installing IJulia kernel</a></h3>
+<p>In order to run Julia in Jupyter notebook, you need to install the IJulia kernel by entering the following command in the Julia REPL terminal:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    1. using Pkg
+    2. Pkg.add("IJulia")
+</code></pre></div></div>
+<p>Once installed, re-open the terminal and open jupyter notebook by entering <code class="highlighter-rouge">jupyter notebook</code> command, now in the browser, click <strong>new</strong> option and you’ll see the Julia kernel mentioned in the dropdown menu, hit the Julia kernel option and you will be redirected to a new notebook with IJulia kernel. Now you can write Julia programs in Jupyter notebooks.</p>
+
+<h3 id="installing-cudajl"><a name="cuda-jl">Installing CUDA.jl</a></h3>
+<p>CUDA.jl package is the main programming interface for working with NVIDIA CUDA GPUs using Julia. Install the package by entering the following command in the Julia REPL terminal:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    1. using Pkg
+    2. Pkg.add("CUDA")
+</code></pre></div></div>
+
+<h2 id="4-installing-nodejs">4. <a name="installing-nodejs">Installing nodejs</a></h2>
+<p>Install nodejs by executing following commands in the terminal:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    1. sudo apt update
+    2. sudo apt install nodejs npm
+</code></pre></div></div>
+<p>To check whether nodejs is properly installed or not, launch REPL terrminal by pressing <strong><code class="highlighter-rouge">Ctrl+C</code> twice</strong> &amp; execute the commands given below:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    1. nodejs
+    2. node -V &amp;&amp; npm -V
+</code></pre></div></div>
+<p>If it returns version then nodejs is properly installed.</p>
+
+<h2 id="5-installing-git">5. <a name="installing-git">Installing Git</a></h2>
+<p>Run the following commands in the terminal and you are good to go:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    1. sudo apt-get install git-all
+    2. git --version
+</code></pre></div></div>
+
+<h2 id="6-installing-pytorch">6. <a name="installing-pytorch">Installing Pytorch</a></h2>
+<p>Head out to <strong><a href="https://pytorch.org">pytorch.org</a></strong> and you’ll see a command customised according to your environment under the <strong>Run this Command</strong> section which should look like this:</p>
+
+<p><strong><code class="highlighter-rouge">conda install pytorch torchvision cudatoolkit=11.3 -c pytorch</code></strong></p>
+
+<p>or you can customised it according to your needs.</p>
+
+<h3 id="installing-pytorch-geometric"><a name="pytorch-geometric">Installing Pytorch Geometric</a></h3>
+<p>Run the following command to install:</p>
+
+<p><strong><code class="highlighter-rouge">conda install pyg -c pyg -c conda-forge</code></strong></p>
+
+<h2 id="7-installing-cuda">7. <a name="installing-cuda">Installing Cuda</a></h2>
+
+<!--
+Install the Cuda toolkit by entering the following command in the terminal:
+
+**`sudo apt install nvidia-cuda-toolkit`**
+
+after installing check if it's installed properly by entering the following command in the terminal:
+
+```
+1. nvidia-smi
+2. nvcc --version
+```
+if it returns the version then it's properly installed.
+
+- check if the pytorch recognises the cuda is installed or not and is available by running the following command in the terminal:
+
+    ```
+    1. python
+    2. import pytorch 
+    3. torch.cuda.is_available()
+    ```
+if it returns **`True`** then it's installed properly.
+-->
+<h3 id="installing-cuda-toolkit"><a name="installing-cuda-toolkit">Installing Cuda toolkit</a></h3>
+
+<ol>
+  <li>
+    <p>Click <strong><a href="https://developer.nvidia.com/cuda-downloads">here</a></strong> to redirect to the official CUDA Toolkit website.</p>
+  </li>
+  <li>
+    <p>Now under <strong>Select Target Platform</strong>, choose <strong>Linux</strong> then select <strong>x86_64</strong> as Architecture, then select <strong>Ubuntu</strong> as Distribution, select <strong>20.04</strong> as Version, lastly select <strong>runfile[local]</strong> as Installer type.</p>
+  </li>
+  <li>
+    <p>Scroll to the <strong>Base Installler</strong> section and under <strong>Installation Instructions</strong> copy the 1st command that will look like this:</p>
+
+    <p><strong><code class="highlighter-rouge">wget https://developer.download.nvidia.com/compute/cuda/11.5.1/local_installers/cuda_11.5.1_495.29.05_linux.run</code></strong></p>
+
+    <p>Now paste &amp; run the above command in the terminal.</p>
+  </li>
+  <li>
+    <p>Now run the <strong><code class="highlighter-rouge">ls</code></strong> command in the terminal, you will see <strong><code class="highlighter-rouge">cuda_11.5.1_495.29.05_linux.run</code></strong> mentioned in the output, copy the name of the file. After that run the following command in the terminal to give execute permission:</p>
+
+    <p><strong><code class="highlighter-rouge">sudo chmod +x cuda_11.5.1_495.29.05_linux.run</code></strong></p>
+  </li>
+  <li>
+    <p>Then copy the 2nd command from the <strong>Installation Instructions</strong>, paste &amp; run it in the terminal:</p>
+
+    <p><strong><code class="highlighter-rouge">sudo sh cuda_11.5.1_495.29.05_linux.run</code></strong></p>
+
+    <p>After that select <strong>Continue</strong> and hit <strong>Enter</strong>. Then write <strong>accept</strong> and hit <strong>Enter</strong> again.</p>
+
+    <p>Next you’ll be in the CUDA Installer window, in that select <strong>CUDA Toolkit 11.5</strong> and deselect every other options and select <strong>Install</strong>. You’ll see the summary after successful installation <strong>(It will be mentioned that <code class="highlighter-rouge">Toolkit:  Installed in /usr/local/cuda-11.5/</code>)</strong>.</p>
+  </li>
+  <li>
+    <p>Open the .bashrc by typing the following command in the terminal:</p>
+
+    <p><strong><code class="highlighter-rouge">nano ~/.bashrc</code></strong></p>
+
+    <ul>
+      <li>Set the PATH by copying the following line to the file:</li>
+    </ul>
+
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> export PATH=/usr/local/cuda-11.5/bin${PATH:+:${PATH}}
+
+ export LD_LIBRARY_PATH=/usr/local/cuda-11.5/lib64\${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
+
+ export CUDADIR=/usr/local/cuda-11.5
+</code></pre></div>    </div>
+    <p>use <strong><code class="highlighter-rouge">Ctrl+Alt+S</code></strong> to save, then use <strong><code class="highlighter-rouge">Ctrl+X</code></strong> to Exit, then it will ask to save modified buffer? - type <strong><code class="highlighter-rouge">Y</code> for yes</strong> and then it’ll ask to save the file hit <strong><code class="highlighter-rouge">Enter</code></strong>.</p>
+
+    <p>After that paste following command in the terminal to force load and re-read the .bashrc file:</p>
+
+    <p><strong><code class="highlighter-rouge">source ~/.bashrc</code></strong></p>
+
+    <p>You are done with CUDA Toolkit Installation.</p>
+  </li>
+  <li>
+    <p>Some useful stuff about Cuda toolkit:</p>
+
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> 1. https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html
+
+ 2. https://stackoverflow.com/questions/53422407/different-cuda-versions-shown-by-nvcc-and-nvidia-smi
+
+ 3. https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html
+
+ 4. https://askubuntu.com/questions/1211919/error-installing-cuda-toolkit-existing-package-manager-installation-of-the-driv
+
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<h3 id="installing-cudnn"><a name="installing-cudnn">Installing CuDNN</a></h3>
+
+<ol>
+  <li>
+    <p>Click <strong><a href="https://developer.nvidia.com/rdp/cudnn-archive">here</a></strong> to redirect to the official cuDNN archive website.</p>
+  </li>
+  <li>
+    <p>Select the latest cuDNN installation. In my case I chose the <strong>cuDNN v8.3.0(November 3rd, 2021), for CUDA 11.5</strong>
+It will ask you to sign up to Nvidia developers program, sign up using any dummy email address then click the link in your email address to verify the sign up and then submit the form. After that the file will be downloaded.</p>
+  </li>
+  <li>
+    <p>Navigate to where you have downloaded the cudnn tar file. In my case I’ve downloaded it to the Downlods directory. So change directory to Downloads by <strong><code class="highlighter-rouge">cd Downloads/</code></strong> after that unzip the CuDNN package .tgz file using the following command in the terminal:</p>
+
+    <p><strong><code class="highlighter-rouge">tar -xvf cudnn-11.5-linux-x64-v8.3.0.98.tgz</code></strong></p>
+  </li>
+  <li>
+    <p>Copy the following files into the CUDA toolkit directory by entering the following command in the terminal:</p>
+
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> 1. sudo cp cuda/include/cudnn*.h /usr/local/cuda/include
+
+ 2. sudo cp -P cuda/lib64/libcudnn* /usr/local/cuda/lib64
+
+ 3. sudo chmod a+r /usr/local/cuda/include/cudnn*.h /usr/local/cuda/lib64/libcudnn*
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Reboot the system and enter the following command in the terminal:</p>
+
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> 1. nvidia-smi
+
+ 2. nvcc --version
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Some useful stuffs about CudNN:</p>
+    <ul>
+      <li>
+        <p>Check CudNN by running the following command:</p>
+
+        <p><code class="highlighter-rouge">cat ${CUDNN_H_PATH} | grep CUDNN_MAJOR -A 2</code></p>
+
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>              OR
+</code></pre></div>        </div>
+
+        <p><code class="highlighter-rouge">sudo cat /usr/local/cuda/include/cudnn.h | grep CUDNN_MAJOR -A2</code></p>
+
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>              OR
+</code></pre></div>        </div>
+
+        <p><code class="highlighter-rouge">CUDNN_H_PATH=$(whereis cudnn.h)</code></p>
+      </li>
+      <li>
+        <p>More References:</p>
+
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+  1. https://docs.nvidia.com/deeplearning/cudnn/install-guide/index.html#installlinux
+
+  2. https://support.system76.com/articles/cuda/
+
+  3. https://newbedev.com/how-to-verify-cudnn-installation
+
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+</ol>
+
+<h2 id="8-installing-jax">8. <a name="installing-jax">Installing JAX</a></h2>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1. pip install --upgrade pip
+
+2. pip install jax[cuda11_cudnn82] -f https://storage.googleapis.com/jax-releases/jax_releases.html
+
+</code></pre></div></div>
+
+<p><strong>Warning: This will install jax compatible with latest version of CUDA &amp; CuDNN. As I’m writing this post, the latest JAX version is compatible with CUDA 11 &amp; CuDNN 8.2 or newer respectively.</strong></p>
+
+<ul>
+  <li>
+    <p>Check if JAX is installed properly with GPU support by running the following commands in the terminal:</p>
+
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  1. python
+
+  2. from jax.lib import xla_bridge
+
+  3. print(xla_bridge.get_backend().platform)
+
+</code></pre></div>    </div>
+
+    <p><strong>If installed properly with GPU support, it will print <code class="highlighter-rouge">GPU</code> in the terminal.</strong></p>
+  </li>
+  <li>
+    <p>Reference:</p>
+
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    
+  https://github.com/google/jax#installation
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h2 id="9-installing-vs-code">9. <a name="installing-vs-code">Installing VS Code</a></h2>
+
+<ol>
+  <li>
+    <p>Go to Pop! shop from the application menu and search for the VS Code</p>
+  </li>
+  <li>
+    <p>Select VS Code and hit install.</p>
+  </li>
+</ol>
+
+<p>Note that in VS Code, search for any extensions you require by pressing <strong><code class="highlighter-rouge">Ctrl+Shift+X</code></strong>.</p>
+
+<p><strong>Note: New stuff will be added to this blog post if I discover some useful things related to Pop! OS for machine learning.</strong></p>
+
+<!-- 
+<div class="imgcap">
+<img src="/blog/images/2019-12-01-facial-keypoint-detection-using-cnn-pytorch-dots-represents-keypoints.png">
+<div class="thecap">Examples of RL in the wild. <b>From left to right</b>: Deep Q Learning network playing ATARI, AlphaGo, Berkeley robot stacking Legos, physically-simulated quadruped leaping over terrain.</div>
+</div>
+-->
+
+</div>
+<div id='bibliography'>
+    <div class='wrap'>
+        <ol class="bibliography"></ol>
+    </div>
+</div>
+
+</div>
+</body>
+</html>

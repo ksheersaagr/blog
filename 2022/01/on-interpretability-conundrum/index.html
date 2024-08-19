@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>[Thoughts]-On the interpretability conundrum | Krunal Kshirsagar</title>
+<meta name="generator" content="Jekyll v4.0.1" />
+<meta property="og:title" content="[Thoughts]-On the interpretability conundrum" />
+<meta name="author" content="krunal kshirsagar" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Of all the unknowable information, you can only get as much unknowable information out of a system as axioms you put in. Better understanding depends on the amount of input axioms. Better prediction requires better understanding. And better understanding makes a system more interpretable. Higher the interpretability of a system the higher we trust the system. Interpretability focuses on understanding the cause of the decision while inference focuses on the conclusion reached on the basis of evidence &amp; reasoning(Causal &amp; Bayesian)." />
+<meta property="og:description" content="Of all the unknowable information, you can only get as much unknowable information out of a system as axioms you put in. Better understanding depends on the amount of input axioms. Better prediction requires better understanding. And better understanding makes a system more interpretable. Higher the interpretability of a system the higher we trust the system. Interpretability focuses on understanding the cause of the decision while inference focuses on the conclusion reached on the basis of evidence &amp; reasoning(Causal &amp; Bayesian)." />
+<link rel="canonical" href="https://ksheersaagr.github.io/blog/2022/01/on-interpretability-conundrum/" />
+<meta property="og:url" content="https://ksheersaagr.github.io/blog/2022/01/on-interpretability-conundrum/" />
+<meta property="og:site_name" content="Krunal Kshirsagar" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2022-01-05T00:00:00+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="[Thoughts]-On the interpretability conundrum" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"krunal kshirsagar"},"dateModified":"2022-01-05T00:00:00+00:00","datePublished":"2022-01-05T00:00:00+00:00","description":"Of all the unknowable information, you can only get as much unknowable information out of a system as axioms you put in. Better understanding depends on the amount of input axioms. Better prediction requires better understanding. And better understanding makes a system more interpretable. Higher the interpretability of a system the higher we trust the system. Interpretability focuses on understanding the cause of the decision while inference focuses on the conclusion reached on the basis of evidence &amp; reasoning(Causal &amp; Bayesian).","headline":"[Thoughts]-On the interpretability conundrum","mainEntityOfPage":{"@type":"WebPage","@id":"https://ksheersaagr.github.io/blog/2022/01/on-interpretability-conundrum/"},"url":"https://ksheersaagr.github.io/blog/2022/01/on-interpretability-conundrum/"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/blog/assets/main.css">
+  <link rel="stylesheet" href="/blog/assets/trac.css"><link type="application/atom+xml" rel="alternate" href="https://ksheersaagr.github.io/blog/feed.xml" title="Krunal Kshirsagar" /><!---
+  <link rel="shortcut icon" href="/favicon.png">
+  -->
+  <link rel="shortcut icon" type="image/png" href="/blog/favicon.png">
+
+  <!-- Katex Math (use defer to speed page load) -->
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"
+        integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq"
+        crossorigin="anonymous">
+  <script defer
+          src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"
+          integrity="sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz"
+          crossorigin="anonymous"></script>
+  <script defer
+          src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"
+          integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI"
+          crossorigin="anonymous"
+          onload='renderMathInElement(document.body,{delimiters: [{left: "\\[",
+          right: "\\]", display: true}, {left: "$", right: "$", display: false}]})'></script>
+</head>
+</head>
+<body>
+<div class='content'><div class='nav'>
+    <ul class='wrap'>
+        <!---<li><b><a href='/blog/' style="font-size:20px; color:black; padding-right: 350px"; class="split">Krunal Kshirsagar</a></b></li>-->
+        <li><a href='/blog'><img src="/blog/images/home-logo-1.svg" alt="Home" style="width:20px;height:20px;"></a></li>
+        <li><a href='/blog/about'><img src="/blog/images/about-logo.svg" alt="About" style="width:20px;height:20px;"></a></li>
+        <li><a href="https://github.com/ksheersaagr"><img src="/blog/images/github-logo.svg" alt="Github" style="width:20px;height:20px;"></a></li>
+        <li><a href="https://www.linkedin.com/in/krunal-kshirsagar/"><img src="/blog/images/linkedin-logo.svg" alt="Linkedin" style="width:20px;height:20px;"></a></li>
+        <li><a href="mailto:krunalkshirsagar29@gmail.com"><img src="/blog/images/mail-logo.svg" alt="Mail" style="width:20px;height:20px;"></a></li>
+    </ul>
+</div>
+<div class='front-matter'>
+    <div class='wrap'>
+        <h1>[Thoughts]-On the interpretability conundrum</h1>
+        <h4></h4>
+        <div class='bylines'>
+            <div class='byline'>
+                <h3>Published by Krunal Kshirsagar</h3>
+                <p>05 January 2022</p>
+            </div>
+        </div>
+        <div class='clear'></div>
+    </div>
+</div>
+<div class='wrap article'>
+    <p>Of all the unknowable information, you can only get as much unknowable information out of 
+a  system  as  axioms  you  put  in.  Better  understanding depends on  the  amount  of  input 
+axioms. Better prediction requires better understanding. And better understanding makes a 
+system  more  interpretable.  Higher  the  interpretability  of a system  the  higher  we  trust the 
+system. Interpretability focuses on understanding the cause of the decision while inference 
+focuses on the conclusion reached on the basis of evidence &amp; reasoning(Causal &amp; Bayesian).</p>
+
+<p>However there’s a general notion of trade-off between the accuracy and interpretability of the 
+system let alone the privacy aspect. The most affected domain by this trade-off is the medical domain. The 
+problem is  that the  systems  are heavily biased; be it racial, gender or any other biases that 
+you can think of. The ML models can predict self-reported race even from corrupted, cropped, and 
+noised medical images as opposed to medical experts. 
+These  ML  models  are  making accurate decisions  about  racial  classification using features that humans can’t even notice carefully, let alone analyse. <a class="citation" href="#readingracebanerjee2021">(Banerjee et al., 2021)</a>
+<br />
+<img src="/blog/images/2022-01-01-trilemma-or-trilogy.png" style="float: right; max-width: 50%; margin: 0 0 1em 2em;" /></p>
+
+<p>In order to trust the system 
+we need to break things down like in the first principles approach and then make a ground-up 
+approach  to  interpretability/reasoning.  Hence,  I  believe,  mathematical  methods  like  causal 
+inference, differential &amp; algebraic geometry, topology, stability theory, probabilistic methods, 
+PDEs, information geometry &amp;  algorithmic information theory can help  achieve better interpretability. I 
+believe with mathematical proofs and truths we can achieve inductive/abductive reasoning and 
+inference  while  discarding  the  role  of  medical  domain  experts  because  humans  have  a 
+tendency to lie, mathematics doesn’t lie. Math was already there,  humans just discovered it 
+they  didn’t  invent  it.  Math  should  be  the  base  of  the  prediction,  inference  and  reasoning 
+instead of a ‘Domain level expert human being’. Thus, in my opinion the model should learn 
+from the mathematical proofs instead (learn from nature, don’t learn from humans).</p>
+
+<!---
+
+False positives, connectomes
+
+Roses aren't red,<br>
+The sky isn't blue,<br>
+It's your perception you idiot,<br>
+that's messing up with you.<br>
+
+**Even Shane Warne knows why interpretability is important :p**
+
+<blockquote class="twitter-tweet" tw-align-center><p lang="en" dir="ltr">This is simply - not out !!!!! We often discuss technology &amp; its use / accuracy. The main problem@is the interpretation of the technology. Here’s a perfect example of the ball clearly hitting the edge of the bat first. <a href="https://t.co/OATRzIHcfg">https://t.co/OATRzIHcfg</a></p>&mdash; Shane Warne (@ShaneWarne) <a href="https://twitter.com/ShaneWarne/status/1466958968735952897?ref_src=twsrc%5Etfw">December 4, 2021</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+
+## Trilemma or Trilogy?
+<img src="/blog/images/2022-01-01-trilemma-or-trilogy.png"
+style="float: right; max-width: 50%; margin: 0 0 1em 2em;"> 
+
+
+Limitation of knowledge-say I don't know if you really don't understand it instead of assuming and confidently lying (false positives)
+
+## Reasoning
+
+Connecting the dots thats reasoning instead of processing the whole information all at once and arriving to a conclusion.
+
+- Rigorous proof:
+
+    Set theory, logic and geometry.
+
+### Inductive vs Deductive approach:
+
+ 
+
+## Science v/s Math
+
+'Mathematics is a language plus reasoning; it is like a language plus logic. Mathematics is tool for reasoning'. ~Richard Feynman
+
+### Trusting the human v/s trusting the nature (math)
+
+**_Don't listen to the 'expert'!_**
+The press secretary ~Robin Hanson (Economist and Advisor at the Future of humanity institute of the oxford university)-humans lie to support their narrative by sacrificing the truth. (Malcolm Gladwell fallacy)
+
+Mathematical proofs and truths over governance and law?!
+
+different experts will have different interpretation.
+Humans aren't absolute, Math is absolute.
+
+Example:
+<blockquote class="twitter-tweet" tw-align-center><p lang="en" dir="ltr">It’s a clear indication of find the pictures to suit your narrative is all that is. In the side view the bat has not reached the ball by the time the ball reaches the pad so there for its safe to say hitting the pad first as its directly in the same line did happen first. <a href="https://twitter.com/hashtag/simple?src=hash&amp;ref_src=twsrc%5Etfw">#simple</a></p>&mdash; Simon Doull (@Sdoull) <a href="https://twitter.com/Sdoull/status/1467007579263934468?ref_src=twsrc%5Etfw">December 4, 2021</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+--->
+
+<p><strong><code class="highlighter-rouge">'If I bet on humanity, I'd never cash a ticket. It didn't pay to trust another human being. They never had it from the beginning, whatever it took'</code>.</strong> <a class="citation" href="#women1978">(Bukowski, 1978)</a></p>
+
+<!---
+## References:
+
+[^1]: Banerjee, I., Bhimireddy, A. R., Burns, J. L., Celi, L. A., Chen, L.-C., Correa, R., Dullerud, N., Ghassemi, M., Huang, S.-C., Kuo, P.-C., Lungren, M. P., Palmer, L. J., Price, B. J., Purkayastha, S., Pyrros, A., Oakden-Rayner, L., Okechukwu, C., Seyyed-Kalantari, L., Trivedi, H., Wang, R., Zaiman, Z., Zhang, H., Gichoya, J. W. (2021). Reading Race: AI Recognises Patient’s Racial Identity In Medical Images. CoRR, abs/2107.10356. https://arxiv.org/abs/2107.10356
+
+[^2]: Bukowski, C. (1978). In *Women*. HarperCollins.
+
+--->
+
+</div>
+<div id='bibliography'>
+    <div class='wrap'>
+        <ol class="bibliography"><li><span id="readingracebanerjee2021">Banerjee, I., Bhimireddy, A. R., Burns, J. L., Celi, L. A., Chen, L.-C., Correa, R., Dullerud, N., Ghassemi, M., Huang, S.-C., Kuo, P.-C., Lungren, M. P., Palmer, L. J., Price, B. J., Purkayastha, S., Pyrros, A., Oakden-Rayner, L., Okechukwu, C., Seyyed-Kalantari, L., Trivedi, H., … Gichoya, J. W. (2021). Reading Race: AI Recognises Patient’s Racial Identity In Medical
+               Images. <i>CoRR</i>, <i>abs/2107.10356</i>. https://arxiv.org/abs/2107.10356</span></li>
+<li><span id="women1978">Bukowski, C. (1978). In <i>Women</i>. HarperCollins.</span></li></ol>
+    </div>
+</div>
+
+</div>
+</body>
+</html>

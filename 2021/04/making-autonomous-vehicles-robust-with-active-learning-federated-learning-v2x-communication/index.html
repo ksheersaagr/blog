@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>[Idea]-Making autonomous vehicles robust with active learning, federated learning &amp; V2X communication | Krunal Kshirsagar</title>
+<meta name="generator" content="Jekyll v4.0.1" />
+<meta property="og:title" content="[Idea]-Making autonomous vehicles robust with active learning, federated learning &amp; V2X communication" />
+<meta name="author" content="krunal kshirsagar" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Recent advances in various machine learning techniques have propelled the enhancement of the autonomous vehicles’ industry. The idea is to couple active learning with federated learning via., v2x communication, to enhance the training of machine learning models. In the case of autonomous vehicles, we almost assume that the roads will be straightforward, flat without any potholes(uncertainty), but that isn’t the case every time. Here, active learning tends to selectively choose the data points with highest informative-ness in order to label them and subsequently add them to the training pool. Additionally, with federated learning we could train our model on multiple agents in a decentralised manner on the local data that we will get from each vehicle to recognise those potholes and help try to save the vehicle from similar potholes. Also, when we think of driving in general, there are good drivers and bad drivers." />
+<meta property="og:description" content="Recent advances in various machine learning techniques have propelled the enhancement of the autonomous vehicles’ industry. The idea is to couple active learning with federated learning via., v2x communication, to enhance the training of machine learning models. In the case of autonomous vehicles, we almost assume that the roads will be straightforward, flat without any potholes(uncertainty), but that isn’t the case every time. Here, active learning tends to selectively choose the data points with highest informative-ness in order to label them and subsequently add them to the training pool. Additionally, with federated learning we could train our model on multiple agents in a decentralised manner on the local data that we will get from each vehicle to recognise those potholes and help try to save the vehicle from similar potholes. Also, when we think of driving in general, there are good drivers and bad drivers." />
+<link rel="canonical" href="https://ksheersaagr.github.io/blog/2021/04/making-autonomous-vehicles-robust-with-active-learning-federated-learning-v2x-communication/" />
+<meta property="og:url" content="https://ksheersaagr.github.io/blog/2021/04/making-autonomous-vehicles-robust-with-active-learning-federated-learning-v2x-communication/" />
+<meta property="og:site_name" content="Krunal Kshirsagar" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-04-14T00:00:00+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="[Idea]-Making autonomous vehicles robust with active learning, federated learning &amp; V2X communication" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"krunal kshirsagar"},"dateModified":"2021-04-14T00:00:00+00:00","datePublished":"2021-04-14T00:00:00+00:00","description":"Recent advances in various machine learning techniques have propelled the enhancement of the autonomous vehicles’ industry. The idea is to couple active learning with federated learning via., v2x communication, to enhance the training of machine learning models. In the case of autonomous vehicles, we almost assume that the roads will be straightforward, flat without any potholes(uncertainty), but that isn’t the case every time. Here, active learning tends to selectively choose the data points with highest informative-ness in order to label them and subsequently add them to the training pool. Additionally, with federated learning we could train our model on multiple agents in a decentralised manner on the local data that we will get from each vehicle to recognise those potholes and help try to save the vehicle from similar potholes. Also, when we think of driving in general, there are good drivers and bad drivers.","headline":"[Idea]-Making autonomous vehicles robust with active learning, federated learning &amp; V2X communication","mainEntityOfPage":{"@type":"WebPage","@id":"https://ksheersaagr.github.io/blog/2021/04/making-autonomous-vehicles-robust-with-active-learning-federated-learning-v2x-communication/"},"url":"https://ksheersaagr.github.io/blog/2021/04/making-autonomous-vehicles-robust-with-active-learning-federated-learning-v2x-communication/"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/blog/assets/main.css">
+  <link rel="stylesheet" href="/blog/assets/trac.css"><link type="application/atom+xml" rel="alternate" href="https://ksheersaagr.github.io/blog/feed.xml" title="Krunal Kshirsagar" /><!---
+  <link rel="shortcut icon" href="/favicon.png">
+  -->
+  <link rel="shortcut icon" type="image/png" href="/blog/favicon.png">
+
+  <!-- Katex Math (use defer to speed page load) -->
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"
+        integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq"
+        crossorigin="anonymous">
+  <script defer
+          src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"
+          integrity="sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz"
+          crossorigin="anonymous"></script>
+  <script defer
+          src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"
+          integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI"
+          crossorigin="anonymous"
+          onload='renderMathInElement(document.body,{delimiters: [{left: "\\[",
+          right: "\\]", display: true}, {left: "$", right: "$", display: false}]})'></script>
+</head>
+</head>
+<body>
+<div class='content'><div class='nav'>
+    <ul class='wrap'>
+        <!---<li><b><a href='/blog/' style="font-size:20px; color:black; padding-right: 350px"; class="split">Krunal Kshirsagar</a></b></li>-->
+        <li><a href='/blog'><img src="/blog/images/home-logo-1.svg" alt="Home" style="width:20px;height:20px;"></a></li>
+        <li><a href='/blog/about'><img src="/blog/images/about-logo.svg" alt="About" style="width:20px;height:20px;"></a></li>
+        <li><a href="https://github.com/ksheersaagr"><img src="/blog/images/github-logo.svg" alt="Github" style="width:20px;height:20px;"></a></li>
+        <li><a href="https://www.linkedin.com/in/krunal-kshirsagar/"><img src="/blog/images/linkedin-logo.svg" alt="Linkedin" style="width:20px;height:20px;"></a></li>
+        <li><a href="mailto:krunalkshirsagar29@gmail.com"><img src="/blog/images/mail-logo.svg" alt="Mail" style="width:20px;height:20px;"></a></li>
+    </ul>
+</div>
+<div class='front-matter'>
+    <div class='wrap'>
+        <h1>[Idea]-Making autonomous vehicles robust with active learning, federated learning & V2X communication</h1>
+        <h4></h4>
+        <div class='bylines'>
+            <div class='byline'>
+                <h3>Published by Krunal Kshirsagar</h3>
+                <p>14 April 2021</p>
+            </div>
+        </div>
+        <div class='clear'></div>
+    </div>
+</div>
+<div class='wrap article'>
+    <p>Recent advances in various machine learning techniques have propelled the enhancement of the autonomous vehicles’ industry. The idea is to couple active learning with federated learning via., v2x communication, to enhance the training of machine learning models. In the case of autonomous vehicles, we almost assume that the roads will be straightforward, flat without any potholes(uncertainty), but that isn’t the case every time. Here, active learning tends to selectively choose the data points with highest informative-ness in order to label them and subsequently add them to the training pool. Additionally, with federated learning we could train our model on multiple agents in a decentralised manner on the local data that we will get from each vehicle to recognise those potholes and help try to save the vehicle from similar potholes. Also, when we think of driving in general, there are good drivers and bad drivers.</p>
+
+<!--more-->
+
+<p>So, on a 2D spectrum, we would picture a cluster of data of those drivers and realise that the good drivers’ data is clustered around a particular coordinate(x,y) on a plane while the bad drivers’ data is all over the place. Because there are numerous characteristics of bad driving but as far as good driving is concerned, they are disciplined and limited. Further, we could train our model to learn from the data that was generated by active learning. Consequently, with federated learning, we can update our model’s parameters across multiple agent vehicles .</p>
+
+<h2 id="introduction">Introduction</h2>
+<p>Autonomous vehicles possess a complex system. The system is an amalgamation of many technologies including perception, prediction, sensing, localisation, mapping, interactions with cloud platforms and data storage. With the advent of autonomous vehicles and organisations looking forward to achieving level 5 autonomy, we have to shift our attention towards data, edge-to-edge computing and better machine learning models to make autonomous vehicles robust and safer for smooth navigation from one part of the world to another, while processing the data and simultaneously preserving the privacy wirelessly.</p>
+
+<h2 id="data">Data</h2>
+<p>In the new age of technology, data is the holy grail that every organisation is pursuing. Data labelling is a crucial and hectic task when working with computer vision data. The data-that is collected from self-driving cars is in abundance and it keeps growing after each driving test. Hence, manually labelling the data is not scalable. In computer vision, such kind of labelling task can involve drawing bounding boxes around objects and/or segmenting the objects within an image. Thus, the aspect of safety in autonomous vehicles and performance of the deep neural networks is directly dependent on labelling the data correctly to classify the objects perfectly in an image and make decisions based on the result of the network model. Incorrectly labelling the data can degrade the performance of the model.</p>
+
+<p><strong>But not every other data is important and how can we figure out which data matters the most?</strong></p>
+
+<h2 id="active-learning">Active Learning</h2>
+<p>Active learning is a training data selection method that actively chooses a small subset of data points that the algorithm wants to learn from using a selection query method for training this diverse data. In the object detection and recognition task, the automatic selection process initialises with training a dedicated deep neural net on a predetermined labelled dataset, then the network sorts through unlabelled data that selects the frames it doesn’t recognise. Additionally, it doesn’t just look for frames with people, potholes, or vehicle objects but where it is most uncertain about those classes. e.g., frames that do not contain a bicycle on the road but is fixed on the back of a truck or car which can confuse the model.</p>
+
+<p><strong>To understand how active learning will work with autonomous vehicles we can look at some examples:</strong></p>
+
+<ul>
+  <li>
+    <h1 id="good-drivers-and-bad-drivers">Good Drivers and Bad Drivers</h1>
+    <p>Let’s take task of changing lanes by autonomous vehicles for e.g., when a vehicle needs to change its lane in order to overtake the vehicle cruising in front of it, also keeping in check of the vehicle behind it and on the next lane as well. There are so many parameters that a vehicle has to check in order to make that lane change smoothly. Now, if the model learns a lane change from data that says to change the lane that is nice, but there is a problem in acquisition of such data where some humans do what may be characterized as bad lane changes. <strong><em><a href="https://www.theverge.com/2016/6/6/11866868/comma-ai-george-hotz-interview-self-driving-cars">All good drivers are good in the same way and all bad drivers are bad in different ways- George Hotz, Comma.ai.</a></em></strong> <strong>( might have derived from the <a href="https://en.wikipedia.org/wiki/Anna_Karenina">Anna Karenina principle</a> by Leo Tolstoy )</strong> Now, hypothetically the task is to discover the good drivers on the 2D spectrum. The good drivers stand out because they’re in one cluster, and the bad drivers are scattered all over the place and your network’s task is to learn from the cluster of good drivers. They’re easy to cluster, our model learned from all of them and that automatically learns the policy of the majority. Because driving is context-dependent and depends on the visual scene and not that mainly on drivers. Let’s assume there is more than one cluster present on the plane and others are random noise and probably bad, now which one of those clusters will you choose to learn from? The problem lies with the bad drivers. How far are they from being good drivers? Here, active learning can learn from the most uncertain of the drivers, it will look for the hard negative samples from the cluster of data and try and fit the model.</p>
+  </li>
+  <li>
+    <h1 id="outlier-detection">Outlier Detection</h1>
+    <p>Outliers are the anomalies that a system comes across when training machine learning models. In simple words, outliers are exception samples that have less likelihood than a specified threshold. Thus, the removal of outliers can be the most common thought here. But, as a result, it can lead to overfit a model. Instead, just as we learn from our mistakes, outliers can prove to be a vital source of information about the data which the model is most uncertain about, such that we rectify our data training pool. Consequently, making a robust classification process.</p>
+  </li>
+</ul>
+
+<h1 id="steps-to-perform-the-desired-machine-learning-task">Steps to perform the desired machine learning task:</h1>
+<p><img src="/blog/images/2021-04-14-making-autonomous-vehicles-robust-with-active-learning-federated-learning-v2x-communication-active-learning.svg " />
+<strong><em>1. Initialise the Active Learner(Query Selector).</em></strong><br />
+<strong><em>2. The learner then predicts the informativeness of each data point from the unlabelled data pool and chooses the most informative unlabelled sample.</em></strong><br />
+<strong><em>3. An oracle labels the query data and adds them to the training dataset.</em></strong> <br />
+<strong><em>4. The learner is re-trained on the updated dataset, that’s one iteration.</em></strong><br />
+<strong><em>5. Repeat the steps with other rounds of informativeness estimation.</em></strong></p>
+
+<p><strong>But how can we compute, process the data and federate the updated parameters across multiple autonomous vehicles?</strong></p>
+
+<h2 id="autonomous-vehicles-as-edge-devices">Autonomous Vehicles as Edge Devices</h2>
+
+<p>Edge computing presents a solid foundation for computing and processing the data in a distributed manner. Therefore, to process the data and train the model locally, we can use autonomous vehicles as edge devices and send relevant data as well as update parameters back-and-forth from autonomous vehicles(local models) to the central cloud(global model) respectively.</p>
+
+<h2 id="federated-learning">Federated Learning</h2>
+
+<p>Federated learning is a machine learning technique that utilises the power of edge computing. Federated learning makes the model learn collaboratively in a decentralised manner while keeping all the data at the edge device itself. In simple words, <strong><em>”it doesn’t take the data to where the training algorithm is; rather, bringing the algorithm to where the data is.”</em></strong> The biggest advantage of federated learning is that you do not have to share your data instead, the model is trained upon your data on your device itself and the parameters are updated accordingly, further aggregating it with other user’s updates to improve the shared model. Also, in federated learning, it is not necessary to have the data on a centralized server but, we have to use these tools according to our use case. <strong>In order to send the data back and forth, perform federated learning and update the model across multiple vehicles at a faster rate, there has to be a robust channel in between.</strong></p>
+
+<h4 id="federated-learning-over-wireless-communication">Federated Learning over Wireless Communication?</h4>
+
+<h2 id="v2x-communication">V2X Communication</h2>
+
+<p>The rise in wireless communication technology such as fifth-generation (5G) networks and sixth-generation (6G) networks paves the way for transferring huge chunks of data wirelessly without any packet loss. Therefore, this lower latency and higher bandwidth communication network builds a solid base for transferring data with 5G and 6G architectures at its core. V2X is a vehicle communication system that consists of many types of communications: vehicle-to-vehicle (V2V), vehicle-to-infrastructure(V2I), vehicle-to-network (V2N), vehicle-to-pedestrian (V2P), vehicle-to-device (V2D), and vehicle-to-grid (V2G).</p>
+<ul>
+  <li><strong>Let’s take an example of potholes:</strong> Whichever vehicle has identified the pothole, avoided it, and drove around it or could have slowed down the vehicle, instead of hitting into it. That vehicle’s data and model are sent to the cloud over the network channel, where the active learner classifies the data as good driving data, and the data is then added to the training pool. Further, the model is aggregated, trained on that good driving data, and the updated parameters are then sent to the local model thereby, updating the local parameters.</li>
+</ul>
+
+<h2 id="procedure">Procedure</h2>
+
+<p><img src="/blog/images/2021-04-14-making-autonomous-vehicles-robust-with-active-learning-federated-learning-v2x-communication-procedure-1-3.svg " /></p>
+
+<p><strong><em>1. Initially, a model is trained on the global dataset and a copy of that model is maintained across multiple autonomous vehicles.</em></strong><br />
+<strong><em>2. Driving through the city, the autonomous vehicles trains the local model on the local data that they’ve gathered and sent back the local data as well as federate the updated local machine learning models’ parameters to the cloud simultaneously at a regular interval.</em></strong><br />
+<strong><em>3. On the cloud, active learning is performed on the gathered dataset and a subset of relevant and informative data is extracted and added to the training data pool.</em></strong></p>
+
+<p><img src="/blog/images/2021-04-14-making-autonomous-vehicles-robust-with-active-learning-federated-learning-v2x-communication-procedure-4-6.svg " /></p>
+
+<p><strong><em>4. Next, the local machine learning models are aggregated and the global model is updated.</em></strong><br />
+<strong><em>5. Later, The global model is then trained on the subset of informative data that is extracted by active learning with the help of an oracle.</em></strong><br />
+<strong><em>6. Lastly, the global model parameters are federated across multiple autonomous vehicles and the local machine learning models’ parameters are updated.</em></strong></p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>The idea is to train the model locally on the local data as well as globally on a training pool- which was generated by performing active learning on the gathered data from multiple autonomous vehicles. Further, update the parameters(weights and biases) of the model and distribute them across multiple autonomous vehicles. Whilst these techniques seems promising, they have their complications concerning security and data protection.
+Nowadays, federated learning is being sold upon the notion of security and privacy but in federated learning the models can be tampered with back-door attacks and data poisoning; might as well threaten the model by performing gradient updates leading to model-poisoning. Data compression is necessary for federated learning for the smooth, faster and secure transmission of data over the network. Although it’s necessary for organisation to have essential data that is needed for the data-hungry model for it to be trained upon, the individual drivers need to have some autonomy over their data - such that the individuals should have a free will to choose what <strong>’kind’</strong> of data they need to share with the respective organisation.Also, with edge computing, it’s important to have reasonable energy consumption with sufficient computing power and as far as v2x communication is concerned, it is in the early stages, tackling the problems such as latency, bandwidth, reliability of the network issues and security from various attacks like DoS and distributed DoS (DDoS) attacks. Although performing federated learning and updating parameters over v2x seem possible, the parameters need to be quantised before sending over the network. Parameter quantisation will lead to the robustness of model from quantisation error. The wireless channel quality should be considered for convergence time of the model - that includes the computation time on local edge devices and the global aggregator plus the communication time in-between them. To reduce the complexity of the model and scale down model parameters, it is necessary to practise model compression and sparse training approaches over the network while maintaining the accuracy of the model. We have to think about communication cost and quality of wireless channel for model optimisation over wireless communication.</p>
+
+<h2 id="references">References</h2>
+
+<ol>
+  <li><a href="https://www.diva-portal.org/smash/get/diva2:1415945/FULLTEXT01.pdf">What Is Active learning?</a></li>
+  <li><a href="https://ai.googleblog.com/2017/04/federated-learning-collaborative.html">Federated learning: collaborative machine learning without centralised training data</a></li>
+  <li><a href="https://www.thalesgroup.com/en/markets/digital-identity-and-security/iot/industries/automotive/use-cases/v2x">V2X: What is vehicle to everything?</a></li>
+  <li><a href="https://www.datacamp.com/community/tutorials/active-learning">Active learning: curious AI algorithms</a></li>
+  <li><a href="https://medium.com/nvidia-ai/scalable-active-learning-for-autonomous-driving-a-practical-implementation-and-a-b-test-4d315ed04b5f">Scalable active learning for autonomous driving</a></li>
+  <li><a href="https://en.wikipedia.org/wiki/Anna_Karenina">Anna Karenina principle</a></li>
+  <li><a href="https://www.researchgate.net/publication/46608952_Bad_Is_Stronger_than_Good">Bad is stronger than good</a></li>
+  <li><a href="https://www.researchgate.net/publication/221653343_Outlier_detection_by_active_learning">Outlier detection by active learning</a></li>
+  <li><a href="https://www.networkworld.com/article/3224893/what-is-edge-computing-and-how-it-s-changing-the-network.html">What is edge computing and why it matters?</a></li>
+  <li><a href="http://weisong.eng.wayne.edu/_resources/pdfs/liu19-EdgeAV.pdf">Edge computing for autonomous driving: opportunities and challenges</a></li>
+  <li><a href="https://www.aitrends.com/selfdrivingcars/edge-computing-ai-self-driving-cars/">Edge computing for AI self-driving cars</a></li>
+  <li><a href="https://www.aitrends.com/ai-insider/federated-machine-learning-for-ai-self-driving-cars/">Federated machine learning for AI self-driving cars</a></li>
+  <li><a href="https://arxiv.org/pdf/1908.06847.pdf">Federated learning for wireless communications: motivation, opportunities and challenges</a></li>
+  <li><a href="https://arxiv.org/ftp/arxiv/papers/2006/2006.06091.pdf">Autonomous driving with deep learning: a survey of state-of-art technologies</a></li>
+</ol>
+
+<p>Thanks for reading.</p>
+
+</div>
+<div id='bibliography'>
+    <div class='wrap'>
+        <ol class="bibliography"></ol>
+    </div>
+</div>
+
+</div>
+</body>
+</html>

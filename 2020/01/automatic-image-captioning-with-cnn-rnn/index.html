@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Automatic Image Captioning with CNN &amp; RNN | Krunal Kshirsagar</title>
+<meta name="generator" content="Jekyll v4.0.1" />
+<meta property="og:title" content="Automatic Image Captioning with CNN &amp; RNN" />
+<meta name="author" content="krunal kshirsagar" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Generally, a captioning model is a combination of two separate architecture that is CNN (Convolutional Neural Networks)&amp; RNN (Recurrent Neural Networks) and in this case LSTM (Long Short Term Memory), which is a special kind of RNN that includes a memory cell, in order to maintain the information for a longer period of time. Basically, CNN is used to generate feature vectors from the spatial data in the images and the vectors are fed through the fully connected linear layer into the RNN architecture in order to generate the sequential data or sequence of words that in the end generate description of an image by applying various image processing techniques to find the patterns in an image." />
+<meta property="og:description" content="Generally, a captioning model is a combination of two separate architecture that is CNN (Convolutional Neural Networks)&amp; RNN (Recurrent Neural Networks) and in this case LSTM (Long Short Term Memory), which is a special kind of RNN that includes a memory cell, in order to maintain the information for a longer period of time. Basically, CNN is used to generate feature vectors from the spatial data in the images and the vectors are fed through the fully connected linear layer into the RNN architecture in order to generate the sequential data or sequence of words that in the end generate description of an image by applying various image processing techniques to find the patterns in an image." />
+<link rel="canonical" href="https://ksheersaagr.github.io/blog/2020/01/automatic-image-captioning-with-cnn-rnn/" />
+<meta property="og:url" content="https://ksheersaagr.github.io/blog/2020/01/automatic-image-captioning-with-cnn-rnn/" />
+<meta property="og:site_name" content="Krunal Kshirsagar" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-01-20T00:00:00+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Automatic Image Captioning with CNN &amp; RNN" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"krunal kshirsagar"},"dateModified":"2020-01-20T00:00:00+00:00","datePublished":"2020-01-20T00:00:00+00:00","description":"Generally, a captioning model is a combination of two separate architecture that is CNN (Convolutional Neural Networks)&amp; RNN (Recurrent Neural Networks) and in this case LSTM (Long Short Term Memory), which is a special kind of RNN that includes a memory cell, in order to maintain the information for a longer period of time. Basically, CNN is used to generate feature vectors from the spatial data in the images and the vectors are fed through the fully connected linear layer into the RNN architecture in order to generate the sequential data or sequence of words that in the end generate description of an image by applying various image processing techniques to find the patterns in an image.","headline":"Automatic Image Captioning with CNN &amp; RNN","mainEntityOfPage":{"@type":"WebPage","@id":"https://ksheersaagr.github.io/blog/2020/01/automatic-image-captioning-with-cnn-rnn/"},"url":"https://ksheersaagr.github.io/blog/2020/01/automatic-image-captioning-with-cnn-rnn/"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/blog/assets/main.css">
+  <link rel="stylesheet" href="/blog/assets/trac.css"><link type="application/atom+xml" rel="alternate" href="https://ksheersaagr.github.io/blog/feed.xml" title="Krunal Kshirsagar" /><!---
+  <link rel="shortcut icon" href="/favicon.png">
+  -->
+  <link rel="shortcut icon" type="image/png" href="/blog/favicon.png">
+
+  <!-- Katex Math (use defer to speed page load) -->
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"
+        integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq"
+        crossorigin="anonymous">
+  <script defer
+          src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"
+          integrity="sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz"
+          crossorigin="anonymous"></script>
+  <script defer
+          src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"
+          integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI"
+          crossorigin="anonymous"
+          onload='renderMathInElement(document.body,{delimiters: [{left: "\\[",
+          right: "\\]", display: true}, {left: "$", right: "$", display: false}]})'></script>
+</head>
+</head>
+<body>
+<div class='content'><div class='nav'>
+    <ul class='wrap'>
+        <!---<li><b><a href='/blog/' style="font-size:20px; color:black; padding-right: 350px"; class="split">Krunal Kshirsagar</a></b></li>-->
+        <li><a href='/blog'><img src="/blog/images/home-logo-1.svg" alt="Home" style="width:20px;height:20px;"></a></li>
+        <li><a href='/blog/about'><img src="/blog/images/about-logo.svg" alt="About" style="width:20px;height:20px;"></a></li>
+        <li><a href="https://github.com/ksheersaagr"><img src="/blog/images/github-logo.svg" alt="Github" style="width:20px;height:20px;"></a></li>
+        <li><a href="https://www.linkedin.com/in/krunal-kshirsagar/"><img src="/blog/images/linkedin-logo.svg" alt="Linkedin" style="width:20px;height:20px;"></a></li>
+        <li><a href="mailto:krunalkshirsagar29@gmail.com"><img src="/blog/images/mail-logo.svg" alt="Mail" style="width:20px;height:20px;"></a></li>
+    </ul>
+</div>
+<div class='front-matter'>
+    <div class='wrap'>
+        <h1>Automatic Image Captioning with CNN & RNN</h1>
+        <h4></h4>
+        <div class='bylines'>
+            <div class='byline'>
+                <h3>Published by Krunal Kshirsagar</h3>
+                <p>20 January 2020</p>
+            </div>
+        </div>
+        <div class='clear'></div>
+    </div>
+</div>
+<div class='wrap article'>
+    <p>Generally, a captioning model is a combination of two separate architecture that is CNN (Convolutional Neural Networks)&amp; RNN (Recurrent Neural Networks) and in this case LSTM (Long Short Term Memory), which is a special kind of RNN that includes a memory cell, in order to maintain the information for a longer period of time. Basically, CNN is used to generate feature vectors from the spatial data in the images and the vectors are fed through the fully connected linear layer into the RNN architecture in order to generate the sequential data or sequence of words that in the end generate description of an image by applying various image processing techniques to find the patterns in an image.</p>
+
+<h1 id="dataset-used-for-training-the-model">Dataset used for Training the Model</h1>
+<p>We’ll be using <a href="https://cocodataset.org/#download"><strong>MS-COCO dataset also stands for Microsoft Common Objects in COntext</strong></a>. This is an advance dataset where each image is paired with five associated captions that describes the content of that particular image. For example, If you were asked to write a caption that describes the image below, how would you do that?</p>
+
+<p><img src="/blog/images/2020-01-20-automatic-image-captioning-with-cnn-rnn-bunch-of-goblins.png" /></p>
+
+<p><em>First, you might look at the image and take note of different objects like different people and kites and blue sky. Then based on how these objects are placed in an image and their relationship with each other, you might think that these people are flying kites. They’re in this big grassy area, so they may also be in a park. After, collecting these visual observations you could put together a phrase that describes the image as, <strong>“People flying kite in a park”</strong>. We use a combination of spatial observation and sequential text descriptions to write a caption, and that’s exactly how the model that uses CNN and RNN architectures rolls.</em></p>
+
+<h2 id="visualize-the-dataset">Visualize the Dataset</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="n">sys</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="s">'/opt/cocoapi/PythonAPI'</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">pycocotools.coco</span> <span class="kn">import</span> <span class="n">COCO</span>
+
+<span class="c1"># initialize COCO API for instance annotations
+</span><span class="n">dataDir</span> <span class="o">=</span> <span class="s">'/opt/cocoapi'</span>
+<span class="n">dataType</span> <span class="o">=</span> <span class="s">'val2014'</span>
+<span class="n">instances_annFile</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">dataDir</span><span class="p">,</span> <span class="s">'annotations/instances_{}.json'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">dataType</span><span class="p">))</span>
+<span class="n">coco</span> <span class="o">=</span> <span class="n">COCO</span><span class="p">(</span><span class="n">instances_annFile</span><span class="p">)</span>
+
+<span class="c1"># initialize COCO API for caption annotations
+</span><span class="n">captions_annFile</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">dataDir</span><span class="p">,</span> <span class="s">'annotations/captions_{}.json'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">dataType</span><span class="p">))</span>
+<span class="n">coco_caps</span> <span class="o">=</span> <span class="n">COCO</span><span class="p">(</span><span class="n">captions_annFile</span><span class="p">)</span>
+
+<span class="c1"># get image ids 
+</span><span class="n">ids</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">coco</span><span class="p">.</span><span class="n">anns</span><span class="p">.</span><span class="n">keys</span><span class="p">())</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">import</span> <span class="nn">skimage.io</span> <span class="k">as</span> <span class="n">io</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+
+<span class="c1"># pick a random image and obtain the corresponding URL
+</span><span class="n">ann_id</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">choice</span><span class="p">(</span><span class="n">ids</span><span class="p">)</span>
+<span class="n">img_id</span> <span class="o">=</span> <span class="n">coco</span><span class="p">.</span><span class="n">anns</span><span class="p">[</span><span class="n">ann_id</span><span class="p">][</span><span class="s">'image_id'</span><span class="p">]</span>
+<span class="n">img</span> <span class="o">=</span> <span class="n">coco</span><span class="p">.</span><span class="n">loadImgs</span><span class="p">(</span><span class="n">img_id</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">url</span> <span class="o">=</span> <span class="n">img</span><span class="p">[</span><span class="s">'coco_url'</span><span class="p">]</span>
+
+<span class="c1"># print URL and visualize corresponding image
+</span><span class="k">print</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+<span class="n">I</span> <span class="o">=</span> <span class="n">io</span><span class="p">.</span><span class="n">imread</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">axis</span><span class="p">(</span><span class="s">'off'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">I</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># load and display captions
+</span><span class="n">annIds</span> <span class="o">=</span> <span class="n">coco_caps</span><span class="p">.</span><span class="n">getAnnIds</span><span class="p">(</span><span class="n">imgIds</span><span class="o">=</span><span class="n">img</span><span class="p">[</span><span class="s">'id'</span><span class="p">]);</span>
+<span class="n">anns</span> <span class="o">=</span> <span class="n">coco_caps</span><span class="p">.</span><span class="n">loadAnns</span><span class="p">(</span><span class="n">annIds</span><span class="p">)</span>
+<span class="n">coco_caps</span><span class="p">.</span><span class="n">showAnns</span><span class="p">(</span><span class="n">anns</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="/blog/images/2020-01-20-automatic-image-captioning-with-cnn-rnn-coco-dataset.png " /></p>
+
+<h2 id="the-cnn-rnn-architecture">The CNN-RNN Architecture</h2>
+
+<h1 id="encoder-decoder">Encoder-Decoder:</h1>
+
+<p><img src="/blog/images/2020-01-20-automatic-image-captioning-with-cnn-rnn-encoder-decoder.png " /></p>
+
+<p>End to End, we want our captioning model to take in an image as input and output a text description of that image. The input image will be processed by a CNN and will connect the output of the CNN to the input of the RNN which will allow us to generate descriptive texts.</p>
+
+<h1 id="resnet-architecture">ResNet Architecture:</h1>
+
+<p><img src="/blog/images/2020-01-20-automatic-image-captioning-with-cnn-rnn-resnet-architecture.png " /></p>
+
+<p>So, in order to generate a description, we feed a particular image into a pre-trained CNN like ResNet architecture. At the end of this network is a softmax classifier that outputs a vector of class scores but we don’t want to classify an image, instead we want a set of features that represents the spatial content in the image. To get that kind of spatial content, <strong>we’re going to remove the final fully connected layer that classifies the image</strong> and look at it’s earlier layer that distills the spatial information in the image.</p>
+
+<h1 id="encoder-cnn">Encoder-CNN:</h1>
+
+<p>Now, we’re using the CNN as a feature extractor that compresses the huge amount of extraction contained in the original image into a smaller representation. This <strong>CNN is often called the encoder because it encodes the content of the image into a smaller feature vector.</strong> Then we can process this feature vector and use it as an initial input to the following RNN.</p>
+
+<p><img src="/blog/images/2020-01-20-automatic-image-captioning-with-cnn-rnn-cnn-encoder.png " /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">EncoderCNN</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">embed_size</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">EncoderCNN</span><span class="p">,</span> <span class="bp">self</span><span class="p">).</span><span class="n">__init__</span><span class="p">()</span>
+        <span class="n">resnet</span> <span class="o">=</span> <span class="n">models</span><span class="p">.</span><span class="n">resnet50</span><span class="p">(</span><span class="n">pretrained</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">resnet</span><span class="p">.</span><span class="n">parameters</span><span class="p">():</span>
+            <span class="n">param</span><span class="p">.</span><span class="n">requires_grad_</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+        
+        <span class="n">modules</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">resnet</span><span class="p">.</span><span class="n">children</span><span class="p">())[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">resnet</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Sequential</span><span class="p">(</span><span class="o">*</span><span class="n">modules</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">embed</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">resnet</span><span class="p">.</span><span class="n">fc</span><span class="p">.</span><span class="n">in_features</span><span class="p">,</span> <span class="n">embed_size</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">images</span><span class="p">):</span>
+        <span class="n">features</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">resnet</span><span class="p">(</span><span class="n">images</span><span class="p">)</span>
+        <span class="n">features</span> <span class="o">=</span> <span class="n">features</span><span class="p">.</span><span class="n">view</span><span class="p">(</span><span class="n">features</span><span class="p">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">features</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">embed</span><span class="p">(</span><span class="n">features</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">features</span>
+</code></pre></div></div>
+
+<h1 id="decoder-rnn">Decoder-RNN:</h1>
+
+<p>The job of the RNN is to decode the process vector and turn it into a sequence of words. Thus, this portion of the network is often called a decoder.</p>
+
+<p><img src="/blog/images/2020-01-20-automatic-image-captioning-with-cnn-rnn-rnn-decoder.png " /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">DecoderRNN</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">embed_size</span><span class="p">,</span> <span class="n">hidden_size</span><span class="p">,</span> <span class="n">vocab_size</span><span class="p">,</span> <span class="n">num_layers</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">().</span><span class="n">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">embedding_layer</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Embedding</span><span class="p">(</span><span class="n">vocab_size</span><span class="p">,</span> <span class="n">embed_size</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="p">.</span><span class="n">lstm</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">LSTM</span><span class="p">(</span><span class="n">input_size</span> <span class="o">=</span> <span class="n">embed_size</span><span class="p">,</span><span class="n">hidden_size</span> <span class="o">=</span> <span class="n">hidden_size</span><span class="p">,</span>
+                            <span class="n">num_layers</span> <span class="o">=</span> <span class="n">num_layers</span><span class="p">,</span> <span class="n">batch_first</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="p">.</span><span class="n">linear</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">hidden_size</span><span class="p">,</span> <span class="n">vocab_size</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span> <span class="n">captions</span><span class="p">):</span>
+        <span class="n">captions</span> <span class="o">=</span> <span class="n">captions</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">embed</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">embedding_layer</span><span class="p">(</span><span class="n">captions</span><span class="p">)</span>
+        <span class="n">embed</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">cat</span><span class="p">((</span><span class="n">features</span><span class="p">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">embed</span><span class="p">),</span> <span class="n">dim</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">lstm_outputs</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">lstm</span><span class="p">(</span><span class="n">embed</span><span class="p">)</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">linear</span><span class="p">(</span><span class="n">lstm_outputs</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">out</span>
+</code></pre></div></div>
+
+<h2 id="loading-annotationstokenizing-captions">Loading Annotations/Tokenizing Captions:</h2>
+
+<p>The RNN component of the captioning network is trained on the captions in the COCO dataset. We’re aiming to train the RNN to predict the next word of a sentence based on previous words. But, how exactly can it train on string data? Neural nets do not do well with strings. They need a well defined numerical alpha to effectively perform back-propagation and learn to produce similar output. So, we have to transform the captions associated with the image into a list of tokenized words. This tokenization turns any string into a list of words.</p>
+
+<p><img src="/blog/images/2020-01-20-automatic-image-captioning-with-cnn-rnn-token.png " /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sample_caption</span> <span class="o">=</span> <span class="s">'A person doing a trick on a rail while riding a skateboard.'</span>
+
+<span class="kn">import</span> <span class="nn">nltk</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+
+<span class="n">sample_tokens</span> <span class="o">=</span> <span class="n">nltk</span><span class="p">.</span><span class="n">tokenize</span><span class="p">.</span><span class="n">word_tokenize</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">sample_caption</span><span class="p">).</span><span class="n">lower</span><span class="p">())</span>
+
+<span class="n">sample_caption</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">start_word</span> <span class="o">=</span> <span class="n">data_loader</span><span class="p">.</span><span class="n">dataset</span><span class="p">.</span><span class="n">vocab</span><span class="p">.</span><span class="n">start_word</span>
+<span class="n">sample_caption</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">data_loader</span><span class="p">.</span><span class="n">dataset</span><span class="p">.</span><span class="n">vocab</span><span class="p">(</span><span class="n">start_word</span><span class="p">))</span>
+<span class="n">sample_caption</span><span class="p">.</span><span class="n">extend</span><span class="p">([</span><span class="n">data_loader</span><span class="p">.</span><span class="n">dataset</span><span class="p">.</span><span class="n">vocab</span><span class="p">(</span><span class="n">token</span><span class="p">)</span> <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">sample_tokens</span><span class="p">])</span>
+<span class="n">end_word</span> <span class="o">=</span> <span class="n">data_loader</span><span class="p">.</span><span class="n">dataset</span><span class="p">.</span><span class="n">vocab</span><span class="p">.</span><span class="n">end_word</span>
+<span class="n">sample_caption</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">data_loader</span><span class="p">.</span><span class="n">dataset</span><span class="p">.</span><span class="n">vocab</span><span class="p">(</span><span class="n">end_word</span><span class="p">))</span>
+<span class="n">sample_caption</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">Tensor</span><span class="p">(</span><span class="n">sample_caption</span><span class="p">).</span><span class="nb">long</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">sample_caption</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="working-of-tokenization">Working of Tokenization:</h2>
+
+<p>First, we iterate through all of the training captions and create a dictionary that maps all unique words to a numerical index. So, every word we come across will have a corresponding integer value that can find in this dictionary. The words in this dictionary are referred to as our vocabulary. The vocabulary typically also includes a few special tokens.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Preview the word2idx dictionary.
+</span><span class="nb">dict</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">data_loader</span><span class="p">.</span><span class="n">dataset</span><span class="p">.</span><span class="n">vocab</span><span class="p">.</span><span class="n">word2idx</span><span class="p">.</span><span class="n">items</span><span class="p">())[:</span><span class="mi">10</span><span class="p">])</span>
+</code></pre></div></div>
+
+<p><img src="/blog/images/2020-01-20-automatic-image-captioning-with-cnn-rnn-dataloader-dataset.png " /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Modify the minimum word count threshold.
+</span><span class="n">vocab_threshold</span> <span class="o">=</span> <span class="mi">4</span>
+
+<span class="c1"># Obtain the data loader.
+</span><span class="n">data_loader</span> <span class="o">=</span> <span class="n">get_loader</span><span class="p">(</span><span class="n">transform</span><span class="o">=</span><span class="n">transform_train</span><span class="p">,</span>
+                         <span class="n">mode</span><span class="o">=</span><span class="s">'train'</span><span class="p">,</span>
+                         <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span>
+                         <span class="n">vocab_threshold</span><span class="o">=</span><span class="n">vocab_threshold</span><span class="p">,</span>
+                         <span class="n">vocab_from_file</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+<span class="c1"># Print the total number of keys in the word2idx dictionary.
+</span><span class="k">print</span><span class="p">(</span><span class="s">'Total number of tokens in vocabulary:'</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">data_loader</span><span class="p">.</span><span class="n">dataset</span><span class="p">.</span><span class="n">vocab</span><span class="p">))</span>
+</code></pre></div></div>
+
+<p><img src="/blog/images/2020-01-20-automatic-image-captioning-with-cnn-rnn-total-no-of-tokens.png " /></p>
+
+<h2 id="embedding-layer">Embedding Layer:</h2>
+
+<p><strong>There’s one more step before these words get sent as input to an RNN and thats the embedding layer, which transforms each word in a caption into a vector of a desired consistent shape.</strong></p>
+
+<h1 id="words-to-vectors">Words to Vectors:</h1>
+
+<p><img src="/blog/images/2020-01-20-automatic-image-captioning-with-cnn-rnn-word-2-vec.png " /></p>
+
+<p>At this point, we know that you cannot directly feed words into an LSTM and expect it to be able to train or produce the correct output. These words first must be turned into a numerical representation so that a network can use normal loss functions and optimizers to calculate how “close” a predicted word and ground truth word (from a known, training caption) are? So, we typically turn a sequence of words into a sequence of numerical values; a vector of numbers where each number maps to a specific word in our vocabulary.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">sample</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">states</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">max_len</span><span class="o">=</span><span class="mi">20</span><span class="p">):</span>
+    <span class="s">" accepts pre-processed image tensor (inputs) and returns predicted sentence (list of tensor ids of length max_len) "</span>
+    <span class="n">output_sentence</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">max_len</span><span class="p">):</span>
+        <span class="n">lstm_outputs</span><span class="p">,</span> <span class="n">states</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">lstm</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">states</span><span class="p">)</span>
+        <span class="n">lstm_outputs</span> <span class="o">=</span> <span class="n">lstm_outputs</span><span class="p">.</span><span class="n">squeeze</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">linear</span><span class="p">(</span><span class="n">lstm_outputs</span><span class="p">)</span>
+        <span class="n">last_pick</span> <span class="o">=</span> <span class="n">out</span><span class="p">.</span><span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">output_sentence</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">last_pick</span><span class="p">.</span><span class="n">item</span><span class="p">())</span>
+        <span class="n">inputs</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">embedding_layer</span><span class="p">(</span><span class="n">last_pick</span><span class="p">).</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">output_sentence</span>
+</code></pre></div></div>
+
+<h2 id="training-the-rnn-decoder-model-with-suitable-parameters">Training the RNN-Decoder model with suitable parameters:</h2>
+
+<p>The Decoder will be made of LSTM cells which is good for remembering the lengthy sequences of words. Each LSTM cell is expecting to see the same shape of the input vector at each time-step. The very first cell is connected to the output feature vector of the CNN encoder. The input to the RNN for all future time steps will be the individual words of the training caption. So, at the start of training, we have some input from our CNN, and LSTM cell with initial state. Now the RNN has two responsibilities:</p>
+<ol>
+  <li>To Remember spatial information from the input feature vector.</li>
+  <li>To Predict the next word.</li>
+</ol>
+
+<p>We know that the very first word it produces should always be the <code class="highlighter-rouge">&lt;start&gt;</code> token and the next word should be those in the training caption. At every time step, we look at the current caption word as input and combine it with the hidden state of the LSTM cell to produce an output. This output is then passed to the fully connected layer that produces a distribution that represents the most likely next word. We feed the next word in the caption to the network and so on until we reach the <code class="highlighter-rouge">&lt;end&gt;</code>token. The hidden state of an LSTM is a function of the input token to the LSTM and the previous state also referred to as the recurrence function. The recurrence function is defined by weights and during the training process, this model uses back-propagation to update these weights until the LSTM cells learn to produce the correct next word in the caption given the current input word. As with most models, you can also take advantage of batching the training data. The model updates its weights after each training batch with the batch size is the number of image caption pairs sent through the network during a single training step. Once the model has trained, it will have learned from many image caption pairs and should be able to generate captions for new image data.</p>
+
+<p><strong>Note: Please do play around with hyperparameters if you don’t get the desired result. I’ve nailed the hyperparameters by setting them to particular value based on instinct in one go. Also, please make sure not to change the values of mean &amp; standard deviation in transforms.Normalize() as those values are default and are considered after rigorous training of ResNet architecture on the ImageNet Dataset.</strong></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="n">nn</span>
+<span class="kn">from</span> <span class="nn">torchvision</span> <span class="kn">import</span> <span class="n">transforms</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="n">sys</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="s">'/opt/cocoapi/PythonAPI'</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">pycocotools.coco</span> <span class="kn">import</span> <span class="n">COCO</span>
+<span class="kn">from</span> <span class="nn">data_loader</span> <span class="kn">import</span> <span class="n">get_loader</span>
+<span class="kn">from</span> <span class="nn">model</span> <span class="kn">import</span> <span class="n">EncoderCNN</span><span class="p">,</span> <span class="n">DecoderRNN</span>
+<span class="kn">import</span> <span class="nn">math</span>
+
+
+<span class="c1">## TODO #1: Select appropriate values for the Python variables below.
+</span><span class="n">batch_size</span> <span class="o">=</span> <span class="mi">64</span>          <span class="c1"># batch size
+</span><span class="n">vocab_threshold</span> <span class="o">=</span> <span class="mi">5</span>        <span class="c1"># minimum word count threshold
+</span><span class="n">vocab_from_file</span> <span class="o">=</span> <span class="bp">True</span>    <span class="c1"># if True, load existing vocab file
+</span><span class="n">embed_size</span> <span class="o">=</span> <span class="mi">300</span>           <span class="c1"># dimensionality of image and word embeddings
+</span><span class="n">hidden_size</span> <span class="o">=</span> <span class="mi">512</span>          <span class="c1"># number of features in hidden state of the RNN decoder
+</span><span class="n">num_epochs</span> <span class="o">=</span> <span class="mi">3</span>             <span class="c1"># number of training epochs
+</span><span class="n">save_every</span> <span class="o">=</span> <span class="mi">1</span>             <span class="c1"># determines frequency of saving model weights
+</span><span class="n">print_every</span> <span class="o">=</span> <span class="mi">100</span>          <span class="c1"># determines window for printing average loss
+</span><span class="n">log_file</span> <span class="o">=</span> <span class="s">'training_log.txt'</span>       <span class="c1"># name of file with saved training loss and perplexity
+</span>
+<span class="c1"># (Optional) TODO #2: Amend the image transform below.
+</span><span class="n">transform_train</span> <span class="o">=</span> <span class="n">transforms</span><span class="p">.</span><span class="n">Compose</span><span class="p">([</span> 
+    <span class="n">transforms</span><span class="p">.</span><span class="n">Resize</span><span class="p">(</span><span class="mi">256</span><span class="p">),</span>                          <span class="c1"># smaller edge of image resized to 256
+</span>    <span class="n">transforms</span><span class="p">.</span><span class="n">RandomCrop</span><span class="p">(</span><span class="mi">224</span><span class="p">),</span>                      <span class="c1"># get 224x224 crop from random location
+</span>    <span class="n">transforms</span><span class="p">.</span><span class="n">RandomHorizontalFlip</span><span class="p">(),</span>               <span class="c1"># horizontally flip image with probability=0.5
+</span>    <span class="n">transforms</span><span class="p">.</span><span class="n">ToTensor</span><span class="p">(),</span>                           <span class="c1"># convert the PIL Image to a tensor
+</span>    <span class="n">transforms</span><span class="p">.</span><span class="n">Normalize</span><span class="p">((</span><span class="mf">0.485</span><span class="p">,</span> <span class="mf">0.456</span><span class="p">,</span> <span class="mf">0.406</span><span class="p">),</span>      <span class="c1"># normalize image for pre-trained model
+</span>                         <span class="p">(</span><span class="mf">0.229</span><span class="p">,</span> <span class="mf">0.224</span><span class="p">,</span> <span class="mf">0.225</span><span class="p">))])</span>
+
+<span class="c1"># Build data loader.
+</span><span class="n">data_loader</span> <span class="o">=</span> <span class="n">get_loader</span><span class="p">(</span><span class="n">transform</span><span class="o">=</span><span class="n">transform_train</span><span class="p">,</span>
+                         <span class="n">mode</span><span class="o">=</span><span class="s">'train'</span><span class="p">,</span>
+                         <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span>
+                         <span class="n">vocab_threshold</span><span class="o">=</span><span class="n">vocab_threshold</span><span class="p">,</span>
+                         <span class="n">vocab_from_file</span><span class="o">=</span><span class="n">vocab_from_file</span><span class="p">)</span>
+
+<span class="c1"># The size of the vocabulary.
+</span><span class="n">vocab_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data_loader</span><span class="p">.</span><span class="n">dataset</span><span class="p">.</span><span class="n">vocab</span><span class="p">)</span>
+
+<span class="c1"># Initialize the encoder and decoder. 
+</span><span class="n">encoder</span> <span class="o">=</span> <span class="n">EncoderCNN</span><span class="p">(</span><span class="n">embed_size</span><span class="p">)</span>
+<span class="n">decoder</span> <span class="o">=</span> <span class="n">DecoderRNN</span><span class="p">(</span><span class="n">embed_size</span><span class="p">,</span> <span class="n">hidden_size</span><span class="p">,</span> <span class="n">vocab_size</span><span class="p">)</span>
+
+<span class="c1"># Move models to GPU if CUDA is available. 
+</span><span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">device</span><span class="p">(</span><span class="s">"cuda"</span> <span class="k">if</span> <span class="n">torch</span><span class="p">.</span><span class="n">cuda</span><span class="p">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="s">"cpu"</span><span class="p">)</span>
+<span class="n">encoder</span><span class="p">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+<span class="n">decoder</span><span class="p">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+
+<span class="c1"># Define the loss function. 
+</span><span class="n">criterion</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">CrossEntropyLoss</span><span class="p">().</span><span class="n">cuda</span><span class="p">()</span> <span class="k">if</span> <span class="n">torch</span><span class="p">.</span><span class="n">cuda</span><span class="p">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="n">nn</span><span class="p">.</span><span class="n">CrossEntropyLoss</span><span class="p">()</span>
+
+<span class="c1"># TODO #3: Specify the learnable parameters of the model.
+</span><span class="n">params</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">decoder</span><span class="p">.</span><span class="n">parameters</span><span class="p">())</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">encoder</span><span class="p">.</span><span class="n">embed</span><span class="p">.</span><span class="n">parameters</span><span class="p">())</span>
+
+<span class="c1"># TODO #4: Define the optimizer.
+</span><span class="n">optimizer</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">optim</span><span class="p">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">params</span> <span class="o">=</span> <span class="n">params</span><span class="p">,</span> <span class="n">lr</span> <span class="o">=</span> <span class="mf">0.001</span><span class="p">)</span>
+
+<span class="c1"># Set the total number of training steps per epoch.
+</span><span class="n">total_step</span> <span class="o">=</span> <span class="n">math</span><span class="p">.</span><span class="n">ceil</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data_loader</span><span class="p">.</span><span class="n">dataset</span><span class="p">.</span><span class="n">caption_lengths</span><span class="p">)</span> <span class="o">/</span> <span class="n">data_loader</span><span class="p">.</span><span class="n">batch_sampler</span><span class="p">.</span><span class="n">batch_size</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><strong>Lowest Loss: 1.74 after more than 6 hours of training:</strong></p>
+
+<p><img src="/blog/images/2020-01-20-automatic-image-captioning-with-cnn-rnn-lowest-loss-6-hours-of-training.png " /></p>
+
+<p><strong><em>Do test the model on Test/Validation Data to check for overfitting as the above result is of the training set.</em></strong></p>
+
+<h2 id="generate-predictions">Generate Predictions:</h2>
+
+<p>A function <strong><code class="highlighter-rouge">(get_prediction)</code></strong> used to loop over images in the test dataset and print your model’s predicted caption.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">get_prediction</span><span class="p">():</span>
+    <span class="n">orig_image</span><span class="p">,</span> <span class="n">image</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">data_loader</span><span class="p">))</span>
+    <span class="n">plt</span><span class="p">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">orig_image</span><span class="p">))</span>
+    <span class="n">plt</span><span class="p">.</span><span class="n">title</span><span class="p">(</span><span class="s">'Sample Image'</span><span class="p">)</span>
+    <span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">image</span><span class="p">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+    <span class="n">features</span> <span class="o">=</span> <span class="n">encoder</span><span class="p">(</span><span class="n">image</span><span class="p">).</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="n">decoder</span><span class="p">.</span><span class="n">sample</span><span class="p">(</span><span class="n">features</span><span class="p">)</span>    
+    <span class="n">sentence</span> <span class="o">=</span> <span class="n">clean_sentence</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">sentence</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h1 id="output">Output:</h1>
+
+<p>Call the <strong><code class="highlighter-rouge">(get_prediction)</code></strong> function every time you want the result.</p>
+
+<h3 id="when-the-model-performed-better">When the model performed better:</h3>
+
+<p><img src="/blog/images/2020-01-20-automatic-image-captioning-with-cnn-rnn-result-when-model-perform-better.png " /></p>
+
+<p><img src="/blog/images/2020-01-20-automatic-image-captioning-with-cnn-rnn-result-when-model-perform-better-1.png " /></p>
+
+<h3 id="when-the-model-didnt-perform-well">When the model didn’t perform well:</h3>
+
+<p><img src="/blog/images/2020-01-20-automatic-image-captioning-with-cnn-rnn-result-when-model-not-perform-that-well.png " /></p>
+
+<p><img src="/blog/images/2020-01-20-automatic-image-captioning-with-cnn-rnn-result-when-model-not-perform-that-well-1.png " /></p>
+
+<p><strong>Clearly, as you can see the model struggles if the image is cluttered with more objects. Hence, the model finds it difficult to generate a long sequence of words that relate to each other using the spatial data in the image.</strong></p>
+
+<p>Make sure to check out my project on <strong><a href="https://github.com/ksheersaagr/Automatic-Image-Captioning/">Github</a>.</strong></p>
+
+<h2 id="references">References:</h2>
+
+<ol>
+  <li>
+    <p><a href="https://arxiv.org/pdf/1502.03044.pdf">Show, Attend and Tell: Neural Image Caption Generation with Visual Attention</a></p>
+  </li>
+  <li>
+    <p><a href="http://colah.github.io/posts/2015-08-Understanding-LSTMs/">Chris Olah’s blog</a></p>
+  </li>
+  <li>
+    <p><a href="http://blog.echen.me/2017/05/30/exploring-lstms/">Exploring LSTMs</a></p>
+  </li>
+  <li>
+    <p><a href="http://karpathy.github.io/2015/05/21/rnn-effectiveness/">Karpathy’s Blog on RNN</a></p>
+  </li>
+  <li>
+    <p><a href="http://cs231n.stanford.edu/slides/2019/cs231n_2019_lecture10.pdf">RNN Slides of CS231n Lecture 10 of 2019- Fei-Fei Li</a></p>
+  </li>
+  <li>
+    <p><a href="http://cs231n.stanford.edu/slides/2017/cs231n_2017_lecture11.pdf">Detection and Segmentation slides of CS231n Lecture 11 of 2017- Fei-Fei Li</a></p>
+  </li>
+  <li>
+    <p><a href="https://stanford.edu/~shervine/teaching/cs-230/cheatsheet-recurrent-neural-networks">RNN Cheatsheet</a></p>
+  </li>
+  <li>
+    <p><a href="https://www.youtube.com/watch?v=6niqTuYFZLQ&amp;list=PL3FW7Lu3i5JvHM8ljYj-zLfQRF3EO8sYv&amp;index=10">Convolutional Neural Networks for Visual Recognition Spring 2017 Stanford Youtube</a></p>
+  </li>
+</ol>
+
+</div>
+<div id='bibliography'>
+    <div class='wrap'>
+        <ol class="bibliography"></ol>
+    </div>
+</div>
+
+</div>
+</body>
+</html>
