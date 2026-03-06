@@ -156,8 +156,7 @@ machines historically.
 
 But conceptually, both seem to revolve around the same general idea:
 
-> **Complex systems evolve across high‑dimensional landscapes under the
-> guidance of entropy-like quantities.**
+> **Complex systems evolve across high‑dimensional landscapes under the guidance of entropy-like quantities.**
 
 In geometry the landscape is curvature.
 
@@ -170,5 +169,18 @@ constraints. And if that happens, it wouldn't surprise me if some of the mathema
 
 **How do complicated spaces reorganize themselves into simpler ones?**
 
+---
 
 
+If you found this article useful in your research, blog, or discussion, please consider citing it.
+
+
+```bibtex
+@online{kshirsagar2026perelman,
+  author  = {Krunal Kshirsagar},
+  title   = {Perelman's spirit inside the Boltzmann machine},
+  year    = {2026},
+  url     = {https://ksheersaagr.github.io/blog/2026/03/perelman-spirit-boltzmann-machine/},
+  note    = {Blog post}
+}
+```
