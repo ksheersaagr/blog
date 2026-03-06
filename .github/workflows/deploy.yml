@@ -16,6 +16,6 @@ jobs:
             ${{ runner.os }}-gems-
 
       - name: Build and Deploy Jekyll
-        uses: helaili/jekyll-action@v2.4.0 # Use specific latest stable version
+        uses: helaili/jekyll-action@master # Use specific latest stable version
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
