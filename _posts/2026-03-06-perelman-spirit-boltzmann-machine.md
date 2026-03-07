@@ -14,7 +14,7 @@ tags:
 -->
 <p>Lately I've been circling around an idea that I'm not sure I fully
 understand yet. It started while I was reading about Boltzmann
-Machines, which is one of those models that everyone learns about
+machine, which is one of those models that everyone learns about
 historically but almost nobody really studies anymore. They show up in classical papers, people mention them when talking about
 energy-based models, and then the conversation quickly moves on to
 modern architectures. But I keep coming back to them because they feel conceptually deeper than the models we actually use. A Boltzmann machine isn't really an algorithm in the traditional sense. It's more like a physical system disguised as a neural network.</p>
@@ -29,12 +29,12 @@ $$
 
 where $Z$ is the partition function.
 
-Training means modifying the energy landscape so that configurations
+<p>Training means modifying the energy landscape so that configurations
 corresponding to real data become more probable.
 
 So learning becomes something like: shape the energy landscape, let
 stochastic dynamics explore it, and gradually the distribution aligns
-with the data.
+with the data.</p>
 
 <p>It's a very strange way to think about deep learning, but also kind
 of elegant. The system is basically trying to find an equilibrium
@@ -42,12 +42,10 @@ distribution. And this thermodynamic flavor of the model kept reminding me of
 something completely unrelated: the work of Grigori Perelman.{% cite
 perelman_2002_entropy %}</p>
 
-Perelman's work is about topology and geometry.{% cite
+<p>Perelman's work is about topology and geometry.{% cite
 perelman_2003_ricci_surgery %} Specifically, his proof
-of the **Poincaré Conjecture**, which sits firmly in the world of
-geometric analysis. Neural networks and geometric topology seem like they belong to different category.
-
-But the more I read about his work, the more I started noticing these weird conceptual dynamics at play.
+of the <mark><b>Poincare Conjecture</b></mark>, which sits firmly in the world of
+geometric analysis. Neural networks and geometric topology seem like they belong to different category. But the more I read about his work, the more I started noticing these weird conceptual dynamics at play. </p>
 
 
 ## Geometry That Flows
@@ -68,11 +66,11 @@ gradually becomes more regular.
 People often compare it to heat diffusion, except instead of
 temperature spreading across a surface, it's curvature spreading across
 a manifold.
-</p>
-That idea alone is already pretty fascinating: geometry not as something
-static but as something that flows.
 
-But what Perelman did was introduce something even more interesting, an entropy-like quantity that governs this flow. Because once entropy enters the picture, the whole story starts sounding suspiciously like statistical physics.
+That idea alone is already pretty fascinating: geometry not as something
+static but as something that flows.</p>
+
+But what Perelman did was introduce something even more interesting, an entropy-like quantity that governs this flow. Because once entropy enters the picture, the whole story starts sounding interestingly like statistical physics.
 
 
 ## Entropy Everywhere
@@ -91,11 +89,10 @@ Boltzmann distribution approximates the empirical data distribution.
 You can think of it as sculpting a probability landscape.
 </p>
 
-Perelman introduced an entropy functional often referred to as
-**W-entropy** that behaves monotonically along Ricci flow{% cite
+<p>Perelman introduced an entropy functional often referred to as
+<b>W-entropy</b> that behaves monotonically along Ricci flow{% cite
 kleiner_lott_2008 %}.
-
-<p>As the manifold evolves, this entropy changes in a controlled way,
+As the manifold evolves, this entropy changes in a controlled way,
 constraining how the geometry can evolve.
 
 So suddenly you have this geometric system whose dynamics are governed
@@ -144,24 +141,18 @@ places where curvature becomes extremely concentrated. In energy-based models, w
 of phase transitions and sharp minima in energy landscapes.
 
 Sometimes the probability mass collapses into narrow regions. Sometimes the dynamics become unstable near critical points.
-Both systems seem to struggle with situations where structure becomes too concentrated.
-
-So there's parallel in between these models.
+Both systems seem to struggle with situations where structure becomes too concentrated. So there's parallel in between these models.
 
 
-## A Suspicion
+## Addendum
 
 None of this is meant to suggest that Perelman influenced Boltzmann
-machines historically.
-
-But conceptually, both seem to revolve around the same general idea:
+machines historically. But conceptually, both seem to revolve around the same general idea:
 
 > **Complex systems evolve across high‑dimensional landscapes under the guidance of entropy-like quantities.**
 
 In geometry the landscape is curvature.
-
 In deep learning the landscape is energy.
-
 But structurally, they feel similar.
 
 Optimization would become a special case of something more generic - the evolution of structures in high-dimensional spaces under entropy
