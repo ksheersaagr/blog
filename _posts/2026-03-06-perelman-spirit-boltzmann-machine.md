@@ -5,13 +5,7 @@ author: krunal kshirsagar
 math: true
 published: true
 ---
-<!--
-tags:
-- boltzmann-machines
-- ricci-flow
-- entropy
-- information-geometry 
--->
+
 <p>Lately I've been circling around an idea that I'm not sure I fully
 understand yet. It started while I was reading about Boltzmann
 machine, which is one of those models that everyone learns about
@@ -75,7 +69,7 @@ But what Perelman did was introduce something even more interesting, an entropy-
 
 ## Entropy Everywhere
 
-In Boltzmann machines, entropy is everywhere. The model implicitly optimizes a **free energy functional**
+In Boltzmann machine, entropy is everywhere. The model implicitly optimizes a **free energy functional**
 
 $$
 F = E - TS
@@ -105,7 +99,7 @@ And at that point the analogy becomes hard to ignore.</p>
 
 - In both systems you have a landscape.
 
-- For Boltzmann machines it's an **energy landscape** over neural
+- For Boltzmann machine it's an **energy landscape** over neural
 configurations.
 
 - For Ricci flow it's a **curvature landscape** over a manifold.
@@ -147,10 +141,10 @@ Both systems seem to struggle with situations where structure becomes too concen
 ## Addendum
 
 None of this is meant to suggest that Perelman influenced Boltzmann
-machines historically{% cite
-li2013boltzmannhtheoremperelmanswentropy %}. But conceptually, both seem to revolve around the same general idea:
+machine historically. But conceptually, both seem to revolve around the same general idea:
 
-> **Complex systems evolve across high‑dimensional landscapes under the guidance of entropy-like quantities.**
+> **Complex systems evolve across high‑dimensional landscapes under the guidance of entropy-like quantities.**{% cite
+li2013boltzmannhtheoremperelmanswentropy %}
 
 In geometry the landscape is curvature.
 In deep learning the landscape is energy.
