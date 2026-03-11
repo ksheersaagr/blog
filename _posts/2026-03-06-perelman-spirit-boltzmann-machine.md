@@ -39,7 +39,7 @@ with the data.</p>
 <p>It's a very strange way to think about deep learning, but also kind
 of elegant. The system is basically trying to find an equilibrium
 distribution. And this thermodynamic flavor of the model kept reminding me of
-something completely unrelated: the work of Grigori Perelman.{% cite
+something completely unrelated: the work of Grisha Perelman.{% cite
 perelman_2002_entropy %}</p>
 
 <p>Perelman's work is about topology and geometry.{% cite
