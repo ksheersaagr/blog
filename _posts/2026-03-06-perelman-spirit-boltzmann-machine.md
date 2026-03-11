@@ -147,7 +147,8 @@ Both systems seem to struggle with situations where structure becomes too concen
 ## Addendum
 
 None of this is meant to suggest that Perelman influenced Boltzmann
-machines historically. But conceptually, both seem to revolve around the same general idea:
+machines historically{% cite
+li2013boltzmannhtheoremperelmanswentropy %}. But conceptually, both seem to revolve around the same general idea:
 
 > **Complex systems evolve across high‑dimensional landscapes under the guidance of entropy-like quantities.**
 
