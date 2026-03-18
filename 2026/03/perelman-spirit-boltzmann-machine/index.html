@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Perelman’s spirit inside the Boltzmann machine | Krunal Kshirsagar</title>
+<meta name="generator" content="Jekyll v4.0.1" />
+<meta property="og:title" content="Perelman’s spirit inside the Boltzmann machine" />
+<meta name="author" content="krunal kshirsagar" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Lately I&#39;ve been circling around an idea that I&#39;m not sure I fully understand yet. It started while I was reading about Boltzmann machine, which is one of those models that everyone learns about historically but almost nobody really studies anymore. They show up in classical papers, people mention them when talking about energy-based models, and then the conversation quickly moves on to modern architectures. But I keep coming back to them because they feel conceptually deeper than the models we actually use. A Boltzmann machine isn&#39;t really an algorithm in the traditional sense. It&#39;s more like a physical system disguised as a neural network." />
+<meta property="og:description" content="Lately I&#39;ve been circling around an idea that I&#39;m not sure I fully understand yet. It started while I was reading about Boltzmann machine, which is one of those models that everyone learns about historically but almost nobody really studies anymore. They show up in classical papers, people mention them when talking about energy-based models, and then the conversation quickly moves on to modern architectures. But I keep coming back to them because they feel conceptually deeper than the models we actually use. A Boltzmann machine isn&#39;t really an algorithm in the traditional sense. It&#39;s more like a physical system disguised as a neural network." />
+<link rel="canonical" href="https://ksheersaagr.github.io/blog/2026/03/perelman-spirit-boltzmann-machine/" />
+<meta property="og:url" content="https://ksheersaagr.github.io/blog/2026/03/perelman-spirit-boltzmann-machine/" />
+<meta property="og:site_name" content="Krunal Kshirsagar" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2026-03-06T00:00:00+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Perelman’s spirit inside the Boltzmann machine" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"krunal kshirsagar"},"dateModified":"2026-03-06T00:00:00+00:00","datePublished":"2026-03-06T00:00:00+00:00","description":"Lately I&#39;ve been circling around an idea that I&#39;m not sure I fully understand yet. It started while I was reading about Boltzmann machine, which is one of those models that everyone learns about historically but almost nobody really studies anymore. They show up in classical papers, people mention them when talking about energy-based models, and then the conversation quickly moves on to modern architectures. But I keep coming back to them because they feel conceptually deeper than the models we actually use. A Boltzmann machine isn&#39;t really an algorithm in the traditional sense. It&#39;s more like a physical system disguised as a neural network.","headline":"Perelman’s spirit inside the Boltzmann machine","mainEntityOfPage":{"@type":"WebPage","@id":"https://ksheersaagr.github.io/blog/2026/03/perelman-spirit-boltzmann-machine/"},"url":"https://ksheersaagr.github.io/blog/2026/03/perelman-spirit-boltzmann-machine/"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/blog/assets/main.css">
+  <link rel="stylesheet" href="/blog/assets/trac.css"><link type="application/atom+xml" rel="alternate" href="https://ksheersaagr.github.io/blog/feed.xml" title="Krunal Kshirsagar" /><!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-KPBCSKJJXB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-KPBCSKJJXB');
+</script>
+<!---
+  <link rel="shortcut icon" href="/favicon.png">
+  <link rel="shortcut icon" type="image/png" href="/blog/favicon.png">
+  -->
+
+  <link rel="shortcut icon" type="image/png" href="/blog/favicon.png">
+  
+  <!-- Katex Math (use defer to speed page load) -->
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"
+        integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq"
+        crossorigin="anonymous">
+  <script defer
+          src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"
+          integrity="sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz"
+          crossorigin="anonymous"></script>
+  <script defer
+          src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"
+          integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI"
+          crossorigin="anonymous"
+          onload='renderMathInElement(document.body,{delimiters: [{left: "\\[",
+          right: "\\]", display: true}, {left: "$", right: "$", display: false}]})'></script>
+</head>
+</head>
+<body>
+<div class='content'><div class='nav'>
+    <ul class='wrap'>
+        <!---<li><b><a href='/blog/' style="font-size:20px; color:black; padding-right: 350px"; class="split">Krunal Kshirsagar</a></b></li>
+        <li><a href='/blog'><img src="/blog/images/home-logo-1.svg" alt="Home" style="width:20px;height:20px;"></a></li>
+        <li><a href='/blog/about'><img src="/blog/images/about-logo.svg" alt="About" style="width:20px;height:20px;"></a></li>
+        <li><a href="https://github.com/ksheersaagr"><img src="/blog/images/github-logo.svg" alt="Github" style="width:20px;height:20px;"></a></li>
+        <li><a href="https://www.linkedin.com/in/krunal-kshirsagar/"><img src="/blog/images/linkedin-logo.svg" alt="Linkedin" style="width:20px;height:20px;"></a></li>
+        <li><a href="mailto:krunalkshirsagar29@gmail.com"><img src="/blog/images/mail-logo.svg" alt="Mail" style="width:20px;height:20px;"></a></li>-->
+
+        <li><a href="/blog/"><img src="/blog/images/home-logo-1.svg" alt="Home" style="width:20px;height:20px;"></a></li>
+        <li><a href="/blog/about"><img src="/blog/images/about-logo.svg" alt="About" style="width:20px;height:20px;"></a></li>
+        <li><a href="https://github.com/ksheersaagr"><img src="/blog/images/github-logo.svg" alt="Github" style="width:20px;height:20px;"></a></li>
+        <li><a href="https://www.linkedin.com/in/krunal-kshirsagar/"><img src="/blog/images/linkedin-logo.svg" alt="Linkedin" style="width:20px;height:20px;"></a></li>
+        <li><a href="mailto:krunalkshirsagar29@gmail.com"><img src="/blog/images/mail-logo.svg" alt="Mail" style="width:20px;height:20px;"></a></li>
+        <li><a href="https://x.com/ksheersaagr"><img src="/blog/images/x-logo-black.png" alt="X" style="width:17px;height:17px;"></a></li>
+    </ul>
+</div>
+
+<div class='front-matter'>
+    <div class='wrap'>
+        <h1>Perelman's spirit inside the Boltzmann machine</h1>
+        <h4></h4>
+        <div class='bylines'>
+            <div class='byline'>
+                <h3>Published by Krunal Kshirsagar</h3>
+                <p>06 March 2026</p>
+            </div>
+        </div>
+        <div class='clear'></div>
+    </div>
+</div>
+<div class='wrap article'>
+    <p>Lately I've been circling around an idea that I'm not sure I fully
+understand yet. It started while I was reading about Boltzmann
+machine, which is one of those models that everyone learns about
+historically but almost nobody really studies anymore. They show up in classical papers, people mention them when talking about
+energy-based models, and then the conversation quickly moves on to
+modern architectures. But I keep coming back to them because they feel conceptually deeper than the models we actually use. A Boltzmann machine isn't really an algorithm in the traditional sense. It's more like a physical system disguised as a neural network.</p>
+
+<p>You define an energy function over configurations of neurons, and the
+probability of a configuration follows the Boltzmann distribution from
+statistical mechanics.</p>
+
+\[P(s) = \frac{1}{Z} e^{-E(s)/T}\]
+
+<p>where $Z$ is the partition function.</p>
+
+<p>Training means modifying the energy landscape so that configurations
+corresponding to real data become more probable.
+
+So learning becomes something like: shape the energy landscape, let
+stochastic dynamics explore it, and gradually the distribution aligns
+with the data.</p>
+
+<p>It's a very strange way to think about deep learning, but also kind
+of elegant. The system is basically trying to find an equilibrium
+distribution. And this thermodynamic flavor of the model kept reminding me of
+something completely unrelated: the work of Grisha Perelman.<a class="citation" href="#perelman_2002_entropy">(Perelman, 2002)</a></p>
+
+<p>Perelman's work is about topology and geometry.<a class="citation" href="#perelman_2003_ricci_surgery">(Perelman, 2003)</a> Specifically, his proof
+of the <mark><b>Poincare Conjecture</b></mark>, which sits firmly in the world of
+geometric analysis. Neural networks and geometric topology seem like they belong to different category. But the more I read about his work, the more I started noticing these weird conceptual dynamics at play. </p>
+
+<h2 id="geometry-that-flows">Geometry That Flows</h2>
+
+<p>The central object in Perelman’s proof is <strong>Ricci Flow</strong>, introduced earlier by Richard Hamilton. Ricci flow describes how geometry evolves over time. If a manifold has a
+metric $g_{ij}$, the flow evolves according to</p>
+
+\[\partial_t g_{ij} = -2R_{ij}\]
+
+<p>where $R_{ij}$ is the Ricci curvature tensor.</p>
+
+<p>Intuitively, curvature diffuses across the manifold. High curvature
+regions flatten out, irregularities smooth over time, and the geometry
+gradually becomes more regular.
+
+People often compare it to heat diffusion, except instead of
+temperature spreading across a surface, it's curvature spreading across
+a manifold.
+
+That idea alone is already pretty fascinating: geometry not as something
+static but as something that flows.</p>
+
+<p>But what Perelman did was introduce something even more interesting, an entropy-like quantity that governs this flow. Because once entropy enters the picture, the whole story starts sounding interestingly like statistical physics.</p>
+
+<h2 id="entropy-everywhere">Entropy Everywhere</h2>
+
+<p>In Boltzmann machine, entropy is everywhere. The model implicitly optimizes a <strong>free energy functional</strong></p>
+
+\[F = E - TS\]
+
+<p>where energy pulls the system toward low-energy states while entropy encourages exploration.
+
+Training the model effectively reshapes the energy function so that the
+Boltzmann distribution approximates the empirical data distribution.
+
+You can think of it as sculpting a probability landscape.
+</p>
+
+<p>Perelman introduced an entropy functional often referred to as
+<b>W-entropy</b> that behaves monotonically along Ricci flow<a class="citation" href="#kleiner_lott_2008">(Kleiner &amp; Lott, 2008)</a>.
+As the manifold evolves, this entropy changes in a controlled way,
+constraining how the geometry can evolve.
+
+So suddenly you have this geometric system whose dynamics are governed
+by something that behaves like thermodynamic entropy.
+
+And at that point the analogy becomes hard to ignore.</p>
+
+<h2 id="landscapes">Landscapes</h2>
+
+<ul>
+  <li>
+    <p>In both systems you have a landscape.</p>
+  </li>
+  <li>
+    <p>For Boltzmann machine it’s an <strong>energy landscape</strong> over neural
+configurations.</p>
+  </li>
+  <li>
+    <p>For Ricci flow it’s a <strong>curvature landscape</strong> over a manifold.</p>
+  </li>
+  <li>
+    <p>Both landscapes evolve over time.</p>
+  </li>
+  <li>
+    <p>Both evolutions are guided by entropy-like quantities.</p>
+  </li>
+  <li>
+    <p>Both processes gradually transform a complicated structure into
+something more general.</p>
+  </li>
+</ul>
+
+<p>And I keep wondering if these similarities are accidental or if they’re pointing toward something deeper.</p>
+
+<h2 id="learning-as-geometry">Learning as Geometry</h2>
+
+<p>There’s a whole area called <strong>information geometry</strong> where probability
+distributions form a manifold<a class="citation" href="#amari_2016">(Amari, 2016)</a>. Under this view, training a probabilistic model is literally a geometric
+process. The parameter space has curvature, the Fisher information defines a
+metric, and optimization becomes a kind of geometric flow. Which starts sounding similar to Ricci flow again.</p>
+
+<p>Except now the object evolving isn’t a geometric manifold in the
+traditional sense - it’s a manifold of probability distributions.
+So, learning is actually a kind of geometric evolution process,
+just happening in probability space rather than physical space.</p>
+
+<h2 id="singularities">Singularities</h2>
+
+<p>Perelman had to deal with singularities forming during Ricci flow -
+places where curvature becomes extremely concentrated. In energy-based models, we see something vaguely analogous in the form
+of phase transitions and sharp minima in energy landscapes.</p>
+
+<p>Sometimes the probability mass collapses into narrow regions. Sometimes the dynamics become unstable near critical points.
+Both systems seem to struggle with situations where structure becomes too concentrated. So there’s parallel in between these models.</p>
+
+<h2 id="addendum">Addendum</h2>
+
+<p>None of this is meant to suggest that Perelman influenced Boltzmann
+machine historically. But conceptually, both seem to revolve around the same general idea:</p>
+
+<blockquote>
+  <p><strong>Complex systems evolve across high‑dimensional landscapes under the guidance of entropy-like quantities.</strong><a class="citation" href="#li2013boltzmannhtheoremperelmanswentropy">(Li, 2013)</a></p>
+</blockquote>
+
+<p>In geometry the landscape is curvature.
+In deep learning the landscape is energy.
+But structurally, they feel similar.</p>
+
+<p>Optimization would become a special case of something more generic - the evolution of structures in high-dimensional spaces under entropy
+constraints. And if that happens, it wouldn’t surprise me if some of the mathematics that appeared in Perelman’s work quietly shows up again. Not because Perelman was thinking about deep learning, but because both problems are ultimately asking the same kind of question:</p>
+
+<p><strong>How do complicated spaces reorganize themselves into simpler ones?</strong></p>
+
+<hr />
+
+<p>If you found this article useful in your research, blog, or discussion, please consider citing it.</p>
+
+<div class="language-bibtex highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">@online</span><span class="p">{</span><span class="nl">kshirsagar2026perelman</span><span class="p">,</span>
+  <span class="na">author</span>  <span class="p">=</span> <span class="s">{Krunal Kshirsagar}</span><span class="p">,</span>
+  <span class="na">title</span>   <span class="p">=</span> <span class="s">{Perelman's spirit inside the Boltzmann machine}</span><span class="p">,</span>
+  <span class="na">year</span>    <span class="p">=</span> <span class="s">{2026}</span><span class="p">,</span>
+  <span class="na">url</span>     <span class="p">=</span> <span class="s">{https://ksheersaagr.github.io/blog/2026/03/perelman-spirit-boltzmann-machine/}</span><span class="p">,</span>
+  <span class="na">note</span>    <span class="p">=</span> <span class="s">{Blog post}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+</div>
+<div id='bibliography'>
+    <div class='wrap'>
+        <ol class="bibliography"><li><span id="perelman_2002_entropy">Perelman, G. (2002). The Entropy Formula for the Ricci Flow and its Geometric Applications. <i>ArXiv Preprint</i>. https://arxiv.org/abs/math/0211159</span></li>
+<li><span id="perelman_2003_ricci_surgery">Perelman, G. (2003). Ricci Flow with Surgery on Three-Manifolds. <i>ArXiv Preprint</i>. https://arxiv.org/abs/math/0303109</span></li>
+<li><span id="kleiner_lott_2008">Kleiner, B., &amp; Lott, J. (2008). Notes on Perelman’s Papers. <i>Geometry &amp; Topology</i>, <i>12</i>, 2587–2855.</span></li>
+<li><span id="amari_2016">Amari, S. (2016). <i>Information Geometry and Its Applications</i>. Springer. https://doi.org/10.1007/978-4-431-55978-8</span></li>
+<li><span id="li2013boltzmannhtheoremperelmanswentropy">Li, X.-D. (2013). <i>From the Boltzmann H-theorem to Perelman’s W-entropy formula for the Ricci flow</i>. https://arxiv.org/abs/1303.5193</span></li></ol>
+    </div>
+</div>
+
+</div>
+</body>
+</html>
